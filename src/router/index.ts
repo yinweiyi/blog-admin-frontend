@@ -5,21 +5,6 @@ const Layout = () => import("@/layout/index.vue")
 /** 常驻路由 */
 export const constantRoutes: RouteRecordRaw[] = [
   {
-    path: "/403",
-    component: () => import("@/views/error-page/403.vue"),
-    meta: {
-      hidden: true
-    }
-  },
-  {
-    path: "/404",
-    component: () => import("@/views/error-page/404.vue"),
-    meta: {
-      hidden: true
-    },
-    alias: "/:pathMatch(.*)*"
-  },
-  {
     path: "/login",
     component: () => import("@/views/login/index.vue"),
     meta: {
@@ -44,62 +29,144 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: "/activity",
+    path: "/system",
     component: Layout,
-    redirect: "/activity/activities",
-    name: "Activity",
+    redirect: "/system/administrators",
+    name: "System",
     meta: {
-      title: "活动管理",
-      elIcon: "Shop"
+      title: "系统",
+      elIcon: "Setting"
     },
     children: [
       {
-        path: "activities",
-        component: () => import("@/views/activity/activity/index.vue"),
-        name: "Activities",
+        path: "administrators",
+        component: () => import("@/views/system/administrator/index.vue"),
+        name: "Administrators",
         meta: {
-          title: "活动管理",
-          keepAlive: true,
+          title: "管理员",
         }
       },
       {
-        path: "activities/add",
-        component: () => import("@/views/activity/activity/add.vue"),
-        name: "ActivityAdd",
+        path: "administrators/add",
+        component: () => import("@/views/system/administrator/add.vue"),
+        name: "AdministratorAdd",
         meta: {
-          title: "添加活动",
-          hidden: true
+          title: "添加管理员",
         }
       },
-      {
-        path: "activity/:id/edit",
-        component: () => import("@/views/activity/activity/edit.vue"),
-        name: "ActivityEdit",
-        meta: {
-          title: "编辑活动",
-          hidden: true
-        }
-      },
-      {
-        path: "activities/:id",
-        component: () => import("@/views/activity/activity/detail.vue"),
-        name: "ActivityDetail",
-        meta: {
-          title: "活动详情",
-          hidden: true
-        }
-      },
-      {
-        path: "winning-history",
-        component: () => import("@/views/activity/activity/index.vue"),
-        name: "WinningHistory",
-        meta: {
-          title: "中奖记录",
-          keepAlive: true
-        }
-      }
+
     ]
-  }
+  },
+  {
+    path: "/article",
+    component: Layout,
+    redirect: "/article/articles",
+    name: "Article",
+    meta: {
+      title: "文章管理",
+      elIcon: "Notebook"
+    },
+    children: [
+      {
+        path: "articles",
+        component: () => import("@/views/article/article/index.vue"),
+        name: "Articles",
+        meta: {
+          title: "文章列表",
+        }
+      },
+      {
+        path: "tags",
+        component: () => import("@/views/article/tag/index.vue"),
+        name: "Tags",
+        meta: {
+          title: "标签管理",
+        }
+      },
+      {
+        path: "categories",
+        component: () => import("@/views/article/category/index.vue"),
+        name: "Categories",
+        meta: {
+          title: "分类管理",
+        }
+      },
+    ]
+  },
+  {
+    path: "/config",
+    component: Layout,
+    redirect: "/config/sites",
+    name: "Config",
+    meta: {
+      title: "配置管理",
+      elIcon: "Tools"
+    },
+    children: [
+      {
+        path: "sites",
+        component: () => import("@/views/config/site/index.vue"),
+        name: "Sites",
+        meta: {
+          title: "站点配置",
+        }
+      },
+      {
+        path: "guestbook",
+        component: () => import("@/views/config/guestbook/index.vue"),
+        name: "Guestbook",
+        meta: {
+          title: "留言版",
+        }
+      },
+      {
+        path: "about",
+        component: () => import("@/views/config/about/index.vue"),
+        name: "About",
+        meta: {
+          title: "关于",
+        }
+      },
+
+    ]
+  },
+  {
+    path: "/other",
+    component: Layout,
+    redirect: "/other/comments",
+    name: "Other",
+    meta: {
+      title: "其它",
+      elIcon: "Memo"
+    },
+    children: [
+      {
+        path: "comments",
+        component: () => import("@/views/other/comment/index.vue"),
+        name: "Comments",
+        meta: {
+          title: "评论管理",
+        }
+      },
+      {
+        path: "friendships",
+        component: () => import("@/views/other/friendship/index.vue"),
+        name: "Friendships",
+        meta: {
+          title: "友情链接",
+        }
+      },
+      {
+        path: "sentences",
+        component: () => import("@/views/other/sentence/index.vue"),
+        name: "Sentences",
+        meta: {
+          title: "每日一句",
+        }
+      },
+
+    ]
+  },
 ]
 
 /**
