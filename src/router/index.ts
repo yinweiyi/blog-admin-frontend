@@ -54,7 +54,15 @@ export const constantRoutes: RouteRecordRaw[] = [
           title: "添加管理员",
         }
       },
-
+      {
+        path: "administrators/:id/edit",
+        component: () => import("@/views/system/administrator/edit.vue"),
+        name: "AdministratorEdit",
+        meta: {
+          title: "编辑管理员",
+          hidden: true
+        }
+      },
     ]
   },
   {
