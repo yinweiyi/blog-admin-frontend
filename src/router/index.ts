@@ -47,11 +47,20 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       },
       {
+        path: "setting",
+        component: () => import("@/views/system/setting/index.vue"),
+        name: "Setting",
+        meta: {
+          title: "设置",
+        }
+      },
+      {
         path: "administrators/add",
         component: () => import("@/views/system/administrator/add.vue"),
         name: "AdministratorAdd",
         meta: {
           title: "添加管理员",
+          hidden: true,
         }
       },
       {
@@ -111,14 +120,6 @@ export const constantRoutes: RouteRecordRaw[] = [
       elIcon: "Tools"
     },
     children: [
-      {
-        path: "sites",
-        component: () => import("@/views/config/site/index.vue"),
-        name: "Sites",
-        meta: {
-          title: "站点配置",
-        }
-      },
       {
         path: "guestbook",
         component: () => import("@/views/config/guestbook/index.vue"),

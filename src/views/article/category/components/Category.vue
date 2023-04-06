@@ -98,7 +98,7 @@ const formRules = reactive<FormRules>({
   ],
   slug: [
     {required: true, message: "标识不能为空", trigger: 'blur'},
-    {min: 3, max: 10, message: '长度必须在 3 到 10 位之间', trigger: 'blur'},
+    {min: 2, max: 20, message: '长度必须在 2 到 20 位之间', trigger: 'blur'},
   ],
 })
 
