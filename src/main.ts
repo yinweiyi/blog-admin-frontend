@@ -16,6 +16,10 @@ import "element-plus/theme-chalk/dark/css-vars.css"
 import "vxe-table/lib/style.css"
 import "vxe-table-plugin-element/dist/style.css"
 import "@/styles/index.scss"
+//引入样式
+import 'mavon-editor/dist/css/index.css';
+import mavonEditor from 'mavon-editor';
+
 
 const app = createApp(App)
 
@@ -26,4 +30,4 @@ loadSvg(app)
 /** 加载自定义指令 */
 loadDirectives(app)
 
-app.use(store).use(router).mount("#app")
+app.use(store).use(mavonEditor).use(router).mount("#app")
