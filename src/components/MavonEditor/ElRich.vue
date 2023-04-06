@@ -7,14 +7,13 @@
       :toolbars-flag="toolbarsFlag"
       :subfield="editPreview === 'edit'"
       preview-background="#fff"
-      :box-shadow="false"
+      :box-shadow="true"
       :autofocus="autofocus"
       :placeholder="placeholder"
       :style="{ 'min-height': height }"
       :ishljs="true"
-      :default-open="defaultopen"
+      :default-open="defaultOpen"
       style="height: 100%; width: 100%"
-      :image-click="imageClick"
       @change="change"
       @img-add="imgAdd"
     />
@@ -49,9 +48,7 @@ const mavon = ref();
 const value = ref('');
 const height = ref('200px');
 const toolbarsFlag = ref(false);
-const defaultopen = ref('preview');
-const showViewer = ref(false);
-const previewImg = ref<any>([]);
+const defaultOpen = ref('preview');
 const markdownOption = ref({
   bold: true, // 粗体
   italic: true, // 斜体
@@ -80,13 +77,12 @@ const markdownOption = ref({
   alignleft: true, // 左对齐
   aligncenter: true, // 居中
   alignright: true, // 右对齐
-  subfield: true, // 单双栏模式
   preview: true, // 预览
 });
 watch(
   () => props.editPreview,
   (val) => {
-    defaultopen.value = val;
+    defaultOpen.value = val;
     toolbarsFlag.value = val === 'edit';
   },
   {immediate: true, deep: true},
@@ -114,14 +110,8 @@ const imgAdd = (pos: number, $file: any) => {
     mavon.value.$img2Url(pos, res.data.link);
   })
 };
-const change = (val: string, val1: string) => {
+const change = (val: string) => {
   emit('richVal', val);
-};
-const imageClick = (data: any) => {
-  previewImg.value = [];
-  previewImg.value.push(data.src);
-  showViewer.value = true;
-  document.documentElement.style.overflowY = 'hidden ';
 };
 </script>
 <style scoped lang="scss">

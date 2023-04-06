@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-card shadow="false">
-      <e-rice
+      <el-rich
         :content="desc"
         placeholder="请输入"
         rich-height="400px"
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import ERice from '@/components/MavonEditor/ERice.vue'
+import ElRich from '@/components/MavonEditor/ElRich.vue'
 import {ref} from "vue";
 
 const desc = ref('')
