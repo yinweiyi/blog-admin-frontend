@@ -2,19 +2,22 @@
   <div class="app-container">
     <el-dialog v-model="state.isShowDialog" title="分类" :before-close="onBeforeClose">
       <el-card shadow="never">
-        <el-form :model="tag" ref="formRef" label-position="right" label-width="100px" :rules="formRules">
+        <el-form :model="friendship" ref="formRef" label-position="right" label-width="100px" :rules="formRules">
 
-          <el-form-item label="标签名：" prop="name">
-            <el-input class="form-input" v-model="tag.name" placeholder="请输入标签名"/>
+          <el-form-item label="标题：" prop="title">
+            <el-input class="form-input" v-model="friendship.title" placeholder="请输入题"/>
           </el-form-item>
-          <el-form-item label="标识：" prop="slug">
-            <el-input class="form-input" v-model="tag.slug" placeholder="请输入标识"/>
+          <el-form-item label="链接：" prop="link">
+            <el-input class="form-input" v-model="friendship.link" placeholder="请输入链接"/>
           </el-form-item>
           <el-form-item label="排序：" prop="order">
-            <el-input-number class="form-input" v-model="tag.order"/>
+            <el-input-number class="form-input" v-model="friendship.order"/>
+          </el-form-item>
+          <el-form-item label="是否开启：" prop="status">
+            <el-switch v-model="friendship.status" class="ml-2"/>
           </el-form-item>
           <el-form-item label="描述：" prop="description">
-            <el-input class="form-input" v-model="tag.description" placeholder="输入描述" type="textarea"/>
+            <el-input class="form-input" v-model="friendship.description" placeholder="输入描述" type="textarea"/>
           </el-form-item>
         </el-form>
 
@@ -29,16 +32,16 @@
 
 <script lang="ts" setup>
 import {reactive, ref, computed, PropType} from "vue";
-import {ITag} from "@/views/article/tag/components/data";
+import {IFriendship} from "@/views/other/friendship/components/data";
 import {FormInstance, FormRules} from "element-plus";
 
 defineOptions({
-  name: "Tag"
+  name: "Friendship"
 })
 
 const props = defineProps({
-  tag: {
-    type: Object as PropType<ITag>,
+  friendship: {
+    type: Object as PropType<IFriendship>,
     required: true
   },
   showDialog: {
@@ -48,14 +51,14 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:showDialog', 'update:tag', 'handleSubmit'])
+const emit = defineEmits(['update:showDialog', 'update:friendship', 'handleSubmit'])
 
 const state = reactive({
   isShowDialog: props.showDialog,
   loading: false
 });
 
-const tag = computed(() => props.tag)
+const friendship = computed(() => props.friendship)
 
 // 关闭弹窗
 const onBeforeClose = (down: Function) => {
@@ -67,19 +70,18 @@ const onBeforeClose = (down: Function) => {
 const formRef = ref<FormInstance | null>(null)
 
 const formRules = reactive<FormRules>({
-  name: [
-    {required: true, message: "标签名不能为空", trigger: 'blur'}
+  title: [
+    {required: true, message: "标题不能为空", trigger: 'blur'}
   ],
-  slug: [
-    {required: true, message: "标识不能为空", trigger: 'blur'},
-    {min: 2, max: 20, message: '长度必须在 2 到 20 位之间', trigger: 'blur'},
+  link: [
+    {required: true, message: "链接不能为空", trigger: 'blur'},
   ],
 })
 
 const handleSubmit = () => {
   formRef.value?.validate((valid: boolean) => {
     if (valid) {
-      emit("update:tag", tag.value)
+      emit("update:friendship", friendship.value)
       emit("handleSubmit")
     } else {
       return false

@@ -142,21 +142,13 @@ export const constantRoutes: RouteRecordRaw[] = [
   {
     path: "/other",
     component: Layout,
-    redirect: "/other/comments",
+    redirect: "/other/friendships",
     name: "Other",
     meta: {
       title: "其它",
       elIcon: "Memo"
     },
     children: [
-      {
-        path: "comments",
-        component: () => import("@/views/other/comment/index.vue"),
-        name: "Comments",
-        meta: {
-          title: "评论管理",
-        }
-      },
       {
         path: "friendships",
         component: () => import("@/views/other/friendship/index.vue"),
