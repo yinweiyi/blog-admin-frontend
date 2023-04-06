@@ -3,7 +3,7 @@
     <el-card v-loading="loading" shadow="never">
       <div class="toolbar-wrapper">
         <div>
-          <el-button type="primary" :icon="CirclePlus" @click="handleAdd()">新增分类</el-button>
+          <el-button type="primary" :icon="CirclePlus" @click="handleAdd()">新增标签</el-button>
         </div>
       </div>
       <div class="table-wrapper">

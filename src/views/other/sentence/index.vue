@@ -3,25 +3,16 @@
     <el-card v-loading="loading" shadow="never">
       <div class="toolbar-wrapper">
         <div>
-          <el-button type="primary" :icon="CirclePlus" @click="handleAdd()">新增链接</el-button>
+          <el-button type="primary" :icon="CirclePlus" @click="handleAdd()">新增句子</el-button>
         </div>
       </div>
       <div class="table-wrapper">
         <el-table :data="tableData" row-key="id" border default-expand-all>
-          <el-table-column prop="title" label="标题" align="center"></el-table-column>
-          <el-table-column prop="link" label="链接" align="center"></el-table-column>
-          <el-table-column label="是否开启" align="center">
-            <template #default="{row}">
-              <el-switch
-                v-model="row.status"
-                class="ml-2"
-                :loading="changeStatusLoading"
-                @change="handleChangeStatus(row)"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column prop="created_at" label="创建时间" align="center"/>
-          <el-table-column fixed="right" label="操作" width="240">
+          <el-table-column prop="author" label="作者" align="center" width="150"></el-table-column>
+          <el-table-column prop="content" label="内容" ></el-table-column>
+          <el-table-column prop="translation" label="翻译"></el-table-column>
+          <el-table-column prop="created_at" label="创建时间" align="center" width="180"/>
+          <el-table-column fixed="right" label="操作" width="130">
             <template #default="{row}">
               <el-button type="primary" text bg size="small" @click="handleEdit(row)">编辑</el-button>
               <el-popconfirm
@@ -37,7 +28,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <Friendship v-model:show-dialog="showDialog" v-model:friendship="friendship" @handleSubmit="handleSubmit"
+        <Sentence v-model:show-dialog="showDialog" v-model:sentence="sentence" @handleSubmit="handleSubmit"
                     v-if="showDialog"/>
       </div>
 
@@ -59,60 +50,57 @@
 
 <script lang="ts" setup>
 import {ref, watch} from "vue"
-import {type IGetTableData} from "@/api/friendship/types/table"
-import {deleteFriendship, getTableDataApi, storeFriendship, updateFriendship, updateStatus} from "@/api/friendship";
+import {type IGetTableData} from "@/api/sentence/types/table"
+import {deleteSentence, getTableDataApi, storeSentence, updateSentence} from "@/api/sentence";
 import {CirclePlus, InfoFilled} from "@element-plus/icons-vue"
 import {useRouter} from "vue-router";
 import {ElMessage} from "element-plus";
-import {IFriendship} from "@/views/other/friendship/components/data";
-import Friendship from './components/Friendship.vue'
+import {ISentence} from "@/views/other/sentence/components/data";
+import Sentence from './components/Sentence.vue'
 import {usePagination} from "@/hooks/usePagination";
 
 defineOptions({
-  name: "Friendships"
+  name: "Sentences"
 })
 
 const loading = ref<boolean>(false)
 const {paginationData, handleCurrentChange, handleSizeChange} = usePagination()
 const showDialog = ref<boolean>(false)
-const changeStatusLoading = ref<boolean>(false)
 
 //#region 查
 const tableData = ref<IGetTableData[]>([])
 const router = useRouter()
 
 
-const defaultFriendship = {
+const defaultSentence = {
   id: 0,
-  title: '',
-  link: '',
-  status: true,
-  order: 0,
-  description: '',
+  author: '',
+  content: '',
+  translation: '',
 };
 
-const friendship = ref<IFriendship>(Object.assign({}, defaultFriendship))
+const sentence = ref<ISentence>(Object.assign({}, defaultSentence))
 
 const handleAdd = () => {
-  friendship.value = Object.assign({}, defaultFriendship)
+  sentence.value = Object.assign({}, defaultSentence)
   showDialog.value = true
 }
 
 const handleEdit = (row: IGetTableData) => {
-  const {id, title, link, status, order, description} = row
-  friendship.value = {id, title, link, status, order, description};
+  const {id, author, content, translation} = row
+  sentence.value = {id, author, content, translation};
   showDialog.value = true
 }
 
 const handleSubmit = () => {
-  if (friendship.value.id > 0) {
-    updateFriendship(friendship.value.id, friendship.value).then(() => {
+  if (sentence.value.id > 0) {
+    updateSentence(sentence.value.id, sentence.value).then(() => {
       ElMessage.success("更新成功")
       showDialog.value = false
       getTableData()
     })
   } else {
-    storeFriendship(friendship.value).then(() => {
+    storeSentence(sentence.value).then(() => {
       ElMessage.success("添加成功")
       showDialog.value = false
       getTableData()
@@ -121,18 +109,9 @@ const handleSubmit = () => {
 }
 
 const handleDelete = (row: IGetTableData) => {
-  deleteFriendship(row.id).then(() => {
+  deleteSentence(row.id).then(() => {
     ElMessage.success("删除成功")
     getTableData();
-  })
-}
-
-const handleChangeStatus = (row: IGetTableData) => {
-  changeStatusLoading.value = true;
-  updateStatus(row.id, {status: row.status}).then(() => {
-    ElMessage.success('更新成功');
-  }).finally(() => {
-    changeStatusLoading.value = false
   })
 }
 
