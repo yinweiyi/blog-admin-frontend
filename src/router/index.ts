@@ -93,6 +93,24 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       },
       {
+        path: "article/add",
+        component: () => import("@/views/article/article/add.vue"),
+        name: "ArticleAdd",
+        meta: {
+          title: "添加文章",
+          hidden: true
+        }
+      },
+      {
+        path: "article/:id/edit",
+        component: () => import("@/views/article/article/edit.vue"),
+        name: "ArticleEdit",
+        meta: {
+          title: "编辑文章",
+          hidden: true
+        }
+      },
+      {
         path: "tags",
         component: () => import("@/views/article/tag/index.vue"),
         name: "Tags",

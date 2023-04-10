@@ -10,10 +10,9 @@
       :box-shadow="true"
       :autofocus="autofocus"
       :placeholder="placeholder"
-      :style="{ 'min-height': height }"
+      :style="{ 'height': height, 'width': '100%', 'z-index': 0 }"
       :ishljs="true"
       :default-open="defaultOpen"
-      style="height: 100%; width: 100%"
       @change="change"
       @img-add="imgAdd"
     />
@@ -22,11 +21,13 @@
 <script setup lang="ts">
 import {ref, watch} from 'vue';
 import {upload} from "@/api/common/file";
+import 'mavon-editor/dist/css/index.css';
 
 // import Api from '@/apis';
 const props = withDefaults(
   defineProps<{
     content?: string;
+    html?: string;
     richHeight?: string;
     editPreview?: string;
     placeholder?: string;
@@ -35,6 +36,7 @@ const props = withDefaults(
   }>(),
   {
     content: '',
+    html: '',
     richHeight: '300px',
     editPreview: 'preview',
     placeholder: '',
@@ -43,7 +45,7 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits<{ (e: 'richVal', value: any): void }>();
+const emit = defineEmits(['update:content', 'update:html']);
 const mavon = ref();
 const value = ref('');
 const height = ref('200px');
@@ -55,7 +57,6 @@ const markdownOption = ref({
   header: true, // 标题
   underline: true, // 下划线
   strikethrough: true, // 中划线
-  mark: true, // 标记
   superscript: true, // 上角标
   subscript: true, // 下角标
   quote: true, // 引用
@@ -74,9 +75,6 @@ const markdownOption = ref({
   trash: true, // 清空
   save: false, // 保存（触发events中的save事件）
   navigation: true, // 导航目录
-  alignleft: true, // 左对齐
-  aligncenter: true, // 居中
-  alignright: true, // 右对齐
   preview: true, // 预览
 });
 watch(
@@ -110,8 +108,9 @@ const imgAdd = (pos: number, $file: any) => {
     mavon.value.$img2Url(pos, res.data.link);
   })
 };
-const change = (val: string) => {
-  emit('richVal', val);
+const change = (val: string, html: string) => {
+  emit('update:content', val);
+  emit('update:html', html);
 };
 </script>
 <style scoped lang="scss">
@@ -130,7 +129,7 @@ const change = (val: string) => {
     }
   }
 
-  img{
+  img {
     width: 100px;
   }
 }

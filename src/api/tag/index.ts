@@ -12,6 +12,13 @@ export function getTableDataApi(params: Table.IGetTableRequestData) {
   })
 }
 
+export function getAllData() {
+  return request<IApiResponseData<Table.IGetTableData[]>>({
+    url: "/tag/all",
+    method: "get"
+  })
+}
+
 export function storeTag(data: ITag) {
   return request({
     url: '/tag/store',
@@ -32,13 +39,6 @@ export function deleteTag(id: number) {
   return request({
     url: `/tag/${id}`,
     method: 'delete',
-  })
-}
-
-export function getTag(id: number) {
-  return request<IApiResponseData<ITag>>({
-    url: '/tag/' + id,
-    method: 'get',
   })
 }
 

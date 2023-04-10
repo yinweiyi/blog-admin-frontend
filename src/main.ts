@@ -17,7 +17,6 @@ import "vxe-table/lib/style.css"
 import "vxe-table-plugin-element/dist/style.css"
 import "@/styles/index.scss"
 //引入样式
-import 'mavon-editor/dist/css/index.css';
 import mavonEditor from 'mavon-editor';
 
 
