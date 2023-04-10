@@ -1,8 +1,6 @@
 <template>
-  <div class="app-container">
     <el-card shadow="never">
       <el-form :model="site" ref="formRef" label-position="right" label-width="100px" :rules="formRules">
-
         <el-form-item label="网站标题：" prop="title">
           <el-input class="form-input" v-model="site.title" placeholder="请输入网站标题"/>
         </el-form-item>
@@ -29,13 +27,13 @@
         <el-form-item label="描述：" prop="description">
           <el-input class="form-input" v-model="site.description" placeholder="输入描述" type="textarea"/>
         </el-form-item>
-      </el-form>
 
-      <el-form-item style="padding-left: 150px">
-        <el-button type="primary" @click="handleSubmit">保存</el-button>
-      </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleSubmit">保存</el-button>
+        </el-form-item>
+      </el-form>
     </el-card>
-  </div>
+
 </template>
 
 <script lang="ts" setup>
@@ -51,7 +49,7 @@ const props = defineProps({
 })
 
 defineOptions({
-  name: "Setting"
+  name: "Site"
 })
 
 const emit = defineEmits(['update:setting', 'handleSubmit'])

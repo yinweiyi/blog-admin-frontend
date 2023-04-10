@@ -111,35 +111,6 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: "/config",
-    component: Layout,
-    redirect: "/config/sites",
-    name: "Config",
-    meta: {
-      title: "配置管理",
-      elIcon: "Tools"
-    },
-    children: [
-      {
-        path: "guestbook",
-        component: () => import("@/views/config/guestbook/index.vue"),
-        name: "Guestbook",
-        meta: {
-          title: "留言版",
-        }
-      },
-      {
-        path: "about",
-        component: () => import("@/views/config/about/index.vue"),
-        name: "About",
-        meta: {
-          title: "关于",
-        }
-      },
-
-    ]
-  },
-  {
     path: "/other",
     component: Layout,
     redirect: "/other/friendships",

@@ -52,6 +52,9 @@ dependencies:
   vxe-table-plugin-element:
     specifier: ^3.0.6
     version: 3.0.6(vxe-table@4.3.10)
+  wangeditor:
+    specifier: ^4.7.15
+    version: 4.7.15
   xe-utils:
     specifier: ^3.5.7
     version: 3.5.7
@@ -428,6 +431,21 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@babel/runtime-corejs3@7.21.0:
+    resolution: {integrity: sha512-TDD4UJzos3JJtM+tHX+w2Uc+KWj7GV+VKKFdMVd2Rx8sdA19hcc3P3AHFYd5LVOw+pYuSd5lICC3gm52B6Rwxw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      core-js-pure: 3.30.0
+      regenerator-runtime: 0.13.11
+    dev: false
+
+  /@babel/runtime@7.21.0:
+    resolution: {integrity: sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.11
+    dev: false
 
   /@babel/template@7.20.7:
     resolution: {integrity: sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw==}
@@ -1967,6 +1985,11 @@ packages:
     resolution: {integrity: sha512-XgZ0pFcakEUlbwQEVNg3+QAis1FyTL3Qel9FYy8pSkQqoG3PNoT0bOCQtOXcOkur21r2Eq2kI+IE+gsmAEVlYw==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /core-js-pure@3.30.0:
+    resolution: {integrity: sha512-+2KbMFGeBU0ln/csoPqTe0i/yfHbrd2EUhNMObsGtXMKS/RTtlkYyi+/3twLcevbgNR0yM/r0Psa3TEoQRpFMQ==}
+    requiresBuild: true
+    dev: false
 
   /cors@2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
@@ -4175,6 +4198,10 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /regenerator-runtime@0.13.11:
+    resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+    dev: false
+
   /regex-not@1.0.2:
     resolution: {integrity: sha512-J6SDjUgDxQj5NusnOtdFxDwN/+HWykR8GELwctJ7mdqhcyy1xEc4SRFHUXvxTp661YaVKAjfRLZ9cCqS6tn32A==}
     engines: {node: '>=0.10.0'}
@@ -4761,7 +4788,6 @@ packages:
 
   /tslib@2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
-    dev: true
 
   /tsutils@3.21.0(typescript@4.9.5):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
@@ -5175,6 +5201,14 @@ packages:
     dependencies:
       xml-name-validator: 4.0.0
     dev: true
+
+  /wangeditor@4.7.15:
+    resolution: {integrity: sha512-aPTdREd8BxXVyJ5MI+LU83FQ7u1EPd341iXIorRNYSOvoimNoZ4nPg+yn3FGbB93/owEa6buLw8wdhYnMCJQLg==}
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@babel/runtime-corejs3': 7.21.0
+      tslib: 2.5.0
+    dev: false
 
   /webidl-conversions@7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}

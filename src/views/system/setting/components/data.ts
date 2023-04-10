@@ -7,3 +7,8 @@ export interface ISite {
   author: string | null
   description: string | null
 }
+
+export interface IGuestbook {
+  content: string
+  can_comment: boolean
+}

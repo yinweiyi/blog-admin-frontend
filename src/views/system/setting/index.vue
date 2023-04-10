@@ -5,6 +5,9 @@
         <el-tab-pane label="站点配置" name="site">
           <Site v-model:setting="setting" v-if="activeName === 'site'" @handleSubmit="handleSubmit"/>
         </el-tab-pane>
+        <el-tab-pane label="留言文本" name="guestbook">
+          <Guestbook v-model:setting="setting" v-if="activeName === 'guestbook'" @handleSubmit="handleSubmit"/>
+        </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
@@ -13,8 +16,9 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue'
 import {getSetting, updateSetting} from "@/api/setting";
-import {ElMessage} from "element-plus";
+import {ElMessage, TabsPaneContext} from "element-plus";
 import Site from './components/Site.vue'
+import Guestbook from './components/Guestbook.vue'
 
 const activeName = ref('site')
 const setting = ref({})
@@ -31,9 +35,10 @@ onMounted(() => {
   handleFetch()
 })
 
-const handleClick = (() => {
-  handleFetch();
-})
+const handleClick = (tab: TabsPaneContext, event: Event) => {
+  activeName.value = tab.paneName === undefined ? '' : tab.paneName.toString();
+  handleFetch()
+}
 
 const handleSubmit = () => {
   updateSetting(activeName.value, setting.value).then(() => {
