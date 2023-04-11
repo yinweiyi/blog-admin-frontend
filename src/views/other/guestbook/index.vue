@@ -1,5 +1,5 @@
 <template>
-  <Comment :id="id" type="article" />
+  <Comment :id="1" type="guestbook" />
 </template>
 
 <script lang="ts" setup>
@@ -7,11 +7,8 @@
 defineOptions({
   name: "ArticleComment"
 })
-import {useRoute} from "vue-router";
 import Comment from "@/components/Comments/Comment.vue"
 
-const route = useRoute();
-const id = +route.params.id;
 </script>
 
 <style scoped lang="scss">

@@ -116,7 +116,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: "ArticleComment",
         meta: {
           title: "文章评论",
-          hidden: false
+          hidden: true
         }
       },
       {
@@ -161,6 +161,14 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: "Sentences",
         meta: {
           title: "每日一句",
+        }
+      },
+      {
+        path: "guestbook",
+        component: () => import("@/views/other/guestbook/index.vue"),
+        name: "Guestbook",
+        meta: {
+          title: "留言"
         }
       },
 
