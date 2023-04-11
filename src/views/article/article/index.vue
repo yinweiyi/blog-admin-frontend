@@ -44,8 +44,10 @@
             </template>
           </el-table-column>
           <el-table-column prop="updated_at" label="更新时间" align="center" width="160"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="160" align="center">
+          <el-table-column fixed="right" label="操作" width="200" align="center">
             <template #default="scope">
+
+              <el-button type="default" text bg size="small" @click="handleToComment(scope.row)">评论</el-button>
               <el-button type="primary" text bg size="small" @click="handleToEdit(scope.row)">编辑</el-button>
 
               <el-popconfirm
@@ -106,6 +108,10 @@ const handleAdd = () => {
 
 const handleToEdit = (row: IGetTableData) => {
   router.push({name: "ArticleEdit", params: {id: row.id}})
+}
+
+const handleToComment = (row: IGetTableData) => {
+  router.push({name: "ArticleComment", params: {id: row.id}})
 }
 
 const handleDelete = (row: IGetTableData) => {

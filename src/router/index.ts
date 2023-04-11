@@ -1,4 +1,4 @@
-import { type RouteRecordRaw, createRouter, createWebHashHistory, createWebHistory } from "vue-router"
+import {type RouteRecordRaw, createRouter, createWebHashHistory, createWebHistory} from "vue-router"
 
 const Layout = () => import("@/layout/index.vue")
 
@@ -111,6 +111,15 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       },
       {
+        path: "article/:id/comment",
+        component: () => import("@/views/article/article/comment.vue"),
+        name: "ArticleComment",
+        meta: {
+          title: "文章评论",
+          hidden: false
+        }
+      },
+      {
         path: "tags",
         component: () => import("@/views/article/tag/index.vue"),
         name: "Tags",
@@ -219,7 +228,7 @@ export function resetRouter() {
   // 注意：所有动态路由路由必须带有 Name 属性，否则可能会不能完全重置干净
   try {
     router.getRoutes().forEach((route) => {
-      const { name, meta } = route
+      const {name, meta} = route
       if (name && meta.roles?.length) {
         router.hasRoute(name) && router.removeRoute(name)
       }
