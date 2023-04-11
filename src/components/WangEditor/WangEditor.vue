@@ -4,18 +4,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import E from 'wangeditor'
 import {defineComponent, onMounted, ref, watch} from "vue";
 import {upload} from "@/api/common/file";
 import {ElMessage} from "element-plus";
 
-const createEditorEffect = (props, context, editorEle) => {
+const createEditorEffect = (props: any, context: any, editorEle: any) => {
 
   const editor = new E(editorEle.value)
 
   // 配置 onchange 回调函数
-  editor.config.onchange = function (newHtml) {
+  editor.config.onchange = function (newHtml: string) {
     context.emit('update:content', newHtml)
   };
   // 配置触发 onchange 的时间频率，默认为 200ms
@@ -23,11 +23,11 @@ const createEditorEffect = (props, context, editorEle) => {
 
   editor.config.uploadImgMaxSize = 2 * 1024 * 1024 // 2M
   // 配置 server 接口地址
-  editor.config.customUploadImg = function (resultFiles, insertImgFn) {
+  editor.config.customUploadImg = function (resultFiles: any, insertImgFn: any) {
     // resultFiles 是 input 中选中的文件列表
     // insertImgFn 是获取图片 url 后，插入到编辑器的方法
     const formData = new FormData()
-    resultFiles.forEach((file) => {
+    resultFiles.forEach((file: any) => {
       formData.append('file', file)
     })
 

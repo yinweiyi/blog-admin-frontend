@@ -1,13 +1,13 @@
 <template>
-  <Comment :id="1" type="guestbook" />
+  <Comment :id="1" type="guestbook"/>
 </template>
 
 <script lang="ts" setup>
+import Comment from "@/components/Comments/Comment.vue"
 
 defineOptions({
   name: "ArticleComment"
 })
-import Comment from "@/components/Comments/Comment.vue"
 
 </script>
 

@@ -1,8 +1,7 @@
 <template>
   <div class="app-container">
     <el-card shadow="never">
-      <el-form :model="formData" ref="formRef" label-position="right" label-width="150px" :rules="formRules"
-               :disabled="props.type === 'detail'">
+      <el-form :model="formData" ref="formRef" label-position="right" label-width="150px" :rules="formRules">
         <el-form-item label="用户名：" prop="name">
           <el-input class="form-input" v-model="formData.name" placeholder="请输入用户名"/>
         </el-form-item>

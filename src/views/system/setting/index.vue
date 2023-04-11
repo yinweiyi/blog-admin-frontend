@@ -21,7 +21,7 @@ import Site from './components/Site.vue'
 import Guestbook from './components/Guestbook.vue'
 
 const activeName = ref('site')
-const setting = ref({})
+const setting = ref<any>()
 
 const handleFetch = () => {
   getSetting(activeName.value).then(res => {

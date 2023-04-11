@@ -38,15 +38,15 @@
 
 <script lang="ts" setup>
 import {getTableDataApi, reply} from "@/api/comment";
-
-defineOptions({
-  name: "Comment"
-})
 import {ref, watch} from "vue";
 import {IGetTableResponseData, IGetTableRequestData, IReply, IComment} from "@/api/comment/types/table";
 import {usePagination} from "@/hooks/usePagination";
 import CommentList from "@/components/Comments/CommentList.vue"
 import {ElMessage} from "element-plus";
+
+defineOptions({
+  name: "Comment"
+})
 
 const props = defineProps({
   id: {
