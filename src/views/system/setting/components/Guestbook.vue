@@ -2,7 +2,7 @@
   <el-card shadow="never" class="card">
     <el-form :model="guestbook" ref="formRef" label-position="right" label-width="120px" :rules="formRules">
       <el-form-item label="内容：" prop="title">
-        <wang-editor v-model:content="guestbook.content" />
+        <t-editor v-model:content="guestbook.content"  />
       </el-form-item>
       <el-form-item label="是否开启评论：" prop="can_comment">
         <el-switch v-model="guestbook.can_comment"/>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import WangEditor from '@/components/WangEditor/WangEditor.vue'
+import TEditor from '@/components/Tinymce/TEditor.vue'
 import {PropType, reactive, ref, watch} from "vue";
 import {IGuestbook} from "@/views/system/setting/components/data";
 import {FormInstance, FormRules} from "element-plus";

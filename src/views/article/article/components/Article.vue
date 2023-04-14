@@ -38,7 +38,7 @@
         </el-form-item>
 
         <el-form-item label="内容：" prop="html" v-if="formData.content_type === 2">
-          <WangEditor v-model:content="formData.html"></WangEditor>
+          <TEditor v-model:content="formData.html"></TEditor>
         </el-form-item>
         <el-form-item label="排序：" prop="order">
           <el-input-number class="form-input" v-model="formData.order"/>
@@ -76,7 +76,7 @@ import {IGetTableData as ICategories} from "@/api/category/types/table";
 import {IGetTableData as ITags} from "@/api/tag/types/table";
 import {getTableDataApi} from "@/api/category";
 import {getAllData} from "@/api/tag";
-import WangEditor from "@/components/WangEditor/WangEditor.vue";
+import TEditor from "@/components/Tinymce/TEditor.vue";
 import ElMdRich from "@/components/MavonEditor/ElMdRich.vue"
 
 defineOptions({
