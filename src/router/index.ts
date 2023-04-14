@@ -61,6 +61,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         meta: {
           title: "添加管理员",
           hidden: true,
+          keepAlive: true
         }
       },
       {
@@ -98,7 +99,8 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: "ArticleAdd",
         meta: {
           title: "添加文章",
-          hidden: true
+          hidden: true,
+          keepAlive: true
         }
       },
       {
