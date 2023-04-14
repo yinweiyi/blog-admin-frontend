@@ -15,7 +15,7 @@ const createEditorEffect = (props: any, context: any, editorEle: any) => {
   const editor = new E(editorEle.value)
 
   // 配置 onchange 回调函数
-  editor.config.onchange = function (newHtml: string) {
+  editor.config.onblur = function (newHtml: string) {
     context.emit('update:content', newHtml)
   };
   // 配置触发 onchange 的时间频率，默认为 200ms

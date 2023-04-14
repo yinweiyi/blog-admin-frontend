@@ -45,7 +45,7 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits(['update:content', 'update:html']);
+const emit = defineEmits(['update:content']);
 const mavon = ref();
 const value = ref('');
 const height = ref('200px');
@@ -108,9 +108,8 @@ const imgAdd = (pos: number, $file: any) => {
     mavon.value.$img2Url(pos, res.data.link);
   })
 };
-const change = (val: string, html: string) => {
+const change = (val: string) => {
   emit('update:content', val);
-  emit('update:html', html);
 };
 </script>
 <style scoped lang="scss">
