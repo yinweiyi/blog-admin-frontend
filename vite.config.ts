@@ -63,6 +63,9 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
           comments: false
         }
       },
+      rollupOptions:{
+        external: ['vue-masonry-css']
+      },
       /** 打包后静态资源目录 */
       assetsDir: "static"
     },
