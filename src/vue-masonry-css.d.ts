@@ -1,5 +1,1 @@
-declare module 'vue-masonry-css' {
-  import VueMasonryCss from 'vue-masonry-css';
-
-  export default VueMasonryCss;
-}
+declare module 'vue-masonry-css';
