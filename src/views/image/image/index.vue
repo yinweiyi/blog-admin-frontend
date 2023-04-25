@@ -16,8 +16,9 @@
       </div>
       <el-button type="primary" :icon="CirclePlus" @click="handleAdd">新增图片</el-button>
     </div>
-    <div gutter="10" v-masonry fit-width="false" transition-duration="0.1s" item-selector=".image" class="images">
-      <div v-masonry-tile v-for="(item, index) in tableData" class="image" :key="index">
+
+    <div class="masonry" v-loading="loading">
+      <div v-for="(item, index) in tableData" :key="index" class="masonry-item">
         <el-card>
           <el-icon class="edit-icon"><Edit  @click="handleEdit(item)" /></el-icon>
           <img :src="item.image_url"/>
@@ -43,7 +44,6 @@ import {CirclePlus, Edit} from "@element-plus/icons-vue"
 import Image from "./components/Image.vue"
 import {IImage} from "@/views/image/image/components/data";
 import {ElMessage} from "element-plus";
-// import Edit
 
 defineOptions({
   name: "Image"
@@ -148,14 +148,13 @@ const onScroll = () => {
       }
     }
   }
-
-
 }
-
 
 onMounted(() => {
   getModels()
   document.querySelector('.app-main')?.addEventListener('scroll', onScroll);
+
+  window.dispatchEvent(new Event('resize')); // 触发窗口大小改变事件
 })
 
 /** 监听分页参数的变化 */
@@ -169,17 +168,15 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
   margin-bottom: 20px;
 }
 
-.images {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  padding: 5px;
+.masonry {
+  column-count: 4;
+  column-gap: 20px;
 
-  .image {
-    width: 24%;
-    border-radius: 5px;
-    box-shadow: 0 5px 5px 1px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
+  .masonry-item {
+    break-inside: avoid-column;
+    margin-bottom: 20px;
+    position: relative;
+
     &:hover{
       .edit-icon {
         display: block;
@@ -197,8 +194,8 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
 
     img {
       width: 100%;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      display: block;
+      border-radius: 5px;
     }
   }
 }

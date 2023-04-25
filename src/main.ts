@@ -19,7 +19,8 @@ import "@/styles/index.scss"
 //引入样式
 import mavonEditor from 'mavon-editor';
 
-import {VueMasonryPlugin} from 'vue-masonry';
+// @ts-ignore
+import VueMasonryCss from 'vue-masonry-css';
 
 const app = createApp(App)
 
@@ -30,4 +31,4 @@ loadSvg(app)
 /** 加载自定义指令 */
 loadDirectives(app)
 
-app.use(store).use(mavonEditor).use(VueMasonryPlugin).use(router).mount("#app")
+app.use(store).use(mavonEditor).use(VueMasonryCss).use(router).mount("#app")
