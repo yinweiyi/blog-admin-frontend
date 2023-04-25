@@ -19,7 +19,8 @@ import "@/styles/index.scss"
 //引入样式
 import mavonEditor from 'mavon-editor';
 
-import VueMasonryCss from 'vue-masonry-css';
+// @ts-ignore
+import VueMasonryCss from '../node_modules/.pnpm/vue-masonry-css@1.0.3/node_modules/vue-masonry-css';
 
 const app = createApp(App)
 
