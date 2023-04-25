@@ -118,3 +118,7 @@ onMounted(() => {
   tinymce.init({})
 })
 </script>
+<style>
+.tox-tinymce-aux{z-index:99999 !important;}
+.tinymce.ui.FloatPanel{z-Index: 99;}
+</style>

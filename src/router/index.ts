@@ -140,6 +140,34 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: "/image",
+    component: Layout,
+    redirect: "/image/images",
+    name: "Image",
+    meta: {
+      title: "AI图片",
+      elIcon: "Picture"
+    },
+    children: [
+      {
+        path: "images",
+        component: () => import("@/views/image/image/index.vue"),
+        name: "Images",
+        meta: {
+          title: "图片",
+        }
+      },
+      {
+        path: "models",
+        component: () => import("@/views/image/model/index.vue"),
+        name: "Models",
+        meta: {
+          title: "图片模型",
+        }
+      }
+    ]
+  },
+  {
     path: "/other",
     component: Layout,
     redirect: "/other/friendships",
