@@ -1,7 +1,5 @@
 declare module 'vue-masonry-css' {
-  import { DefineComponent } from 'vue';
+  import VueMasonryCss from 'vue-masonry-css';
 
-  const VueMasonry: DefineComponent<{}, {}, any>;
-
-  export default VueMasonry;
+  export default VueMasonryCss;
 }

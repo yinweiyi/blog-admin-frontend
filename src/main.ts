@@ -1,13 +1,13 @@
 // core
-import { createApp } from "vue"
+import {createApp} from "vue"
 import App from "@/App.vue"
 import store from "@/store"
 import router from "@/router"
 import "@/router/permission"
 // load
-import { loadSvg } from "@/icons"
-import { loadPlugins } from "@/plugins"
-import { loadDirectives } from "@/directives"
+import {loadSvg} from "@/icons"
+import {loadPlugins} from "@/plugins"
+import {loadDirectives} from "@/directives"
 // css
 import "uno.css"
 import "normalize.css"
@@ -30,5 +30,4 @@ loadSvg(app)
 /** 加载自定义指令 */
 loadDirectives(app)
 
-// @ts-ignore
 app.use(store).use(mavonEditor).use(VueMasonryCss).use(router).mount("#app")
