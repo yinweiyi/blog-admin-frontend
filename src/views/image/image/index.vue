@@ -10,21 +10,61 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button @click="getTableData" type="primary">搜索</el-button>
+            <el-button @click="getTableData(true)" type="primary">搜索</el-button>
           </el-form-item>
         </el-form>
       </div>
       <el-button type="primary" :icon="CirclePlus" @click="handleAdd">新增图片</el-button>
     </div>
+    <Waterfall
+      :list="tableData"
+      :row-key="options.rowKey"
+      :gutter="options.gutter"
+      :has-around-gutter="options.hasAroundGutter"
+      :width="options.width"
+      :breakpoints="options.breakpoints"
+      :img-selector="options.imgSelector"
+      :background-color="options.backgroundColor"
+      :animation-effect="options.animationEffect"
+      :animation-duration="options.animationDuration"
+      :animation-delay="options.animationDelay"
+      :lazyload="options.lazyload"
+      :load-props="options.loadProps"
+    >
+      <template #item="{ item, url, index }">
+        <div
+          class="bg-gray-900 rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-linear hover:shadow-lg hover:shadow-gray-600 group">
+          <div class="overflow-hidden">
+            <LazyImg :url="item.image_url"
+                     class="cursor-pointer transition-all duration-300 ease-linear group-hover:scale-105"/>
+          </div>
+          <div class="px-4 pt-2 pb-4 border-t border-t-gray-800">
+            <div class="pt-3 flex justify-between items-center border-t border-t-gray-600 border-opacity-50">
+              <div class="text-gray-50">
+                <el-button type="primary" size="small" style="border-radius:12px" @click.stop="handleEdit(item)">
+                  编辑
+                </el-button>
+              </div>
+              <div>
+                <el-popconfirm
+                  :icon="InfoFilled"
+                  icon-color="#626AEF"
+                  title="真的要删除此条数据吗？"
+                  @confirm="handleDelete(item, index)"
+                >
+                  <template #reference>
+                    <el-button type="danger" size="small" style="border-radius:12px">
+                      删除
+                    </el-button>
+                  </template>
+                </el-popconfirm>
 
-    <div class="masonry" v-loading="loading">
-      <div v-for="(item, index) in tableData" :key="index" class="masonry-item">
-        <el-card>
-          <el-icon class="edit-icon"><Edit  @click="handleEdit(item)" /></el-icon>
-          <img :src="item.image_url"/>
-        </el-card>
-      </div>
-    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </Waterfall>
 
     <Image v-model:show-dialog="showImageDialog" :models="models" v-model:image="image" v-if="showImageDialog"
            @handleSubmit="handleSubmit"/>
@@ -34,16 +74,20 @@
 
 <script lang="ts" setup>
 
-import {onMounted, reactive, ref, watch} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {IGetTableData, IGetTableParam} from "@/api/image/types/table";
 import {IGetTableData as IModelData} from "@/api/image-model/types/table";
-import {getTableDataApi, storeImage, updateImage} from "@/api/image";
+import {getTableDataApi, storeImage, updateImage, deleteImage} from "@/api/image";
 import {getTableDataApi as getModelApi} from "@/api/image-model";
 import {usePagination} from "@/hooks/usePagination";
-import {CirclePlus, Edit} from "@element-plus/icons-vue"
+import {CirclePlus, InfoFilled} from "@element-plus/icons-vue"
 import Image from "./components/Image.vue"
 import {IImage} from "@/views/image/image/components/data";
 import {ElMessage} from "element-plus";
+import loadingPng from "@/assets/waterfall/loading.png"
+import errorPng from "@/assets/waterfall/error.png"
+import {LazyImg, Waterfall} from 'vue-waterfall-plugin-next'
+import 'vue-waterfall-plugin-next/dist/style.css'
 
 defineOptions({
   name: "Image"
@@ -80,18 +124,24 @@ const handleEdit = (row: IGetTableData) => {
   showImageDialog.value = true
 }
 
+const handleDelete = (row: IGetTableData, index: number) => {
+  deleteImage(row.id).then(() => {
+    ElMessage.success("删除成功")
+    tableData.value.splice(index, 1)
+  })
+}
+
 const handleSubmit = () => {
   if (image.value.id > 0) {
     updateImage(image.value.id, image.value).then(() => {
       ElMessage.success("更新成功")
       showImageDialog.value = false
-      getTableData()
     })
   } else {
     storeImage(image.value).then(() => {
       ElMessage.success("添加成功")
       showImageDialog.value = false
-      getTableData()
+      tableData.value.unshift(image.value)
     })
   }
 }
@@ -121,13 +171,21 @@ const getModels = () => {
 }
 
 const loading = ref<boolean>(false)
-const getTableData = () => {
+const getTableData = (refresh: boolean) => {
   loading.value = true
+  if (refresh) {
+    paginationData.currentPage = 1
+  }
   formData.page = paginationData.currentPage
   formData.pageSize = paginationData.pageSize
   getTableDataApi(formData).then(res => {
     paginationData.total = res.data.total
-    tableData.value.push(...res.data.list)
+    if (refresh) {
+      tableData.value = res.data.list
+    } else {
+      tableData.value.push(...res.data.list)
+    }
+
   }).finally(() => {
     loading.value = false
   })
@@ -144,21 +202,61 @@ const onScroll = () => {
       // 已滚动到最底部
       if (loading.value === false && Math.ceil(paginationData.total / paginationData.pageSize) > paginationData.currentPage) {
         paginationData.currentPage++
-        getTableData();
+        getTableData(false)
       }
     }
   }
 }
 
+const options = reactive({
+  // 唯一key值
+  rowKey: 'id',
+  // 卡片之间的间隙
+  gutter: 10,
+  // 是否有周围的gutter
+  hasAroundGutter: true,
+  // 卡片在PC上的宽度
+  width: 320,
+  // 自定义行显示个数，主要用于对移动端的适配
+  breakpoints: {
+    1200: {
+      // 当屏幕宽度小于等于1200
+      rowPerView: 4,
+    },
+    800: {
+      // 当屏幕宽度小于等于800
+      rowPerView: 3,
+    },
+    500: {
+      // 当屏幕宽度小于等于500
+      rowPerView: 2,
+    },
+  },
+  // 动画效果
+  animationEffect: 'animate__fadeInUp',
+  // 动画时间
+  animationDuration: 1000,
+  // 动画延迟
+  animationDelay: 300,
+  // 背景色
+  backgroundColor: '#151515',
+  // imgSelector
+  imgSelector: 'src.original',
+  // 加载配置
+  loadProps: {
+    loadingPng,
+    errorPng,
+  },
+  // 是否懒加载
+  lazyload: true,
+
+})
+
 onMounted(() => {
   getModels()
   document.querySelector('.app-main')?.addEventListener('scroll', onScroll);
-
-  window.dispatchEvent(new Event('resize')); // 触发窗口大小改变事件
+  getTableData(true)
 })
-
-/** 监听分页参数的变化 */
-watch([() => paginationData.currentPage, () => paginationData.pageSize], getTableData, {immediate: true})
 </script>
 
 <style scoped lang="scss">
@@ -166,38 +264,6 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-}
-
-.masonry {
-  column-count: 4;
-  column-gap: 20px;
-
-  .masonry-item {
-    break-inside: avoid-column;
-    margin-bottom: 20px;
-    position: relative;
-
-    &:hover{
-      .edit-icon {
-        display: block;
-      }
-    }
-
-    .edit-icon {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      color: #1b1c1f;
-      display: none;
-      cursor: pointer;
-    }
-
-    img {
-      width: 100%;
-      display: block;
-      border-radius: 5px;
-    }
-  }
 }
 
 </style>

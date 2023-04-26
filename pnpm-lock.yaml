@@ -49,12 +49,12 @@ dependencies:
   vue:
     specifier: ^3.2.47
     version: 3.2.47
-  vue-masonry-css:
-    specifier: ^1.0.3
-    version: 1.0.3
   vue-router:
     specifier: ^4.1.6
     version: 4.1.6(vue@3.2.47)
+  vue-waterfall-plugin-next:
+    specifier: 2.2.0
+    version: 2.2.0(vue@3.2.47)
   vxe-table:
     specifier: ^4.3.10
     version: 4.3.10(vue@3.2.47)(xe-utils@3.5.7)
@@ -107,7 +107,7 @@ devDependencies:
     version: 8.35.0
   eslint-plugin-prettier:
     specifier: ^4.2.1
-    version: 4.2.1(eslint-config-prettier@8.6.0)(eslint@8.35.0)(prettier@2.8.4)
+    version: 4.2.1(eslint@8.35.0)(prettier@2.8.4)
   eslint-plugin-vue:
     specifier: ^9.9.0
     version: 9.9.0(eslint@8.35.0)
@@ -1549,6 +1549,10 @@ packages:
       uri-js: 4.4.1
     dev: true
 
+  /animate.css@4.1.1:
+    resolution: {integrity: sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==}
+    dev: false
+
   /ansi-escapes@4.3.2:
     resolution: {integrity: sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==}
     engines: {node: '>=8'}
@@ -2445,6 +2449,22 @@ packages:
     dependencies:
       eslint: 8.35.0
       eslint-config-prettier: 8.6.0(eslint@8.35.0)
+      prettier: 2.8.4
+      prettier-linter-helpers: 1.0.0
+    dev: true
+
+  /eslint-plugin-prettier@4.2.1(eslint@8.35.0)(prettier@2.8.4):
+    resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      eslint: '>=7.28.0'
+      eslint-config-prettier: '*'
+      prettier: '>=2.0.0'
+    peerDependenciesMeta:
+      eslint-config-prettier:
+        optional: true
+    dependencies:
+      eslint: 8.35.0
       prettier: 2.8.4
       prettier-linter-helpers: 1.0.0
     dev: true
@@ -5137,10 +5157,6 @@ packages:
       - supports-color
     dev: true
 
-  /vue-masonry-css@1.0.3:
-    resolution: {integrity: sha512-viecHQiHVLez7HlYUQsv1wJb2MT/RDSzkDp6m3In41vPrk6OsBmT2qRE8LZqYIA4daIwrnx/Xm8h4fjOpuE3hw==}
-    dev: false
-
   /vue-router@4.1.6(vue@3.2.47):
     resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}
     peerDependencies:
@@ -5167,6 +5183,16 @@ packages:
       '@volar/vue-typescript': 1.2.0
       typescript: 4.9.5
     dev: true
+
+  /vue-waterfall-plugin-next@2.2.0(vue@3.2.47):
+    resolution: {integrity: sha512-rhrTdAlBnMWWt6737L+E08A7itgK3wHTy1NsSDgR9EPiBPuHYlth8jL2/hp2gIMAS4XUxJBtitfNUyK5qynkEA==}
+    dependencies:
+      animate.css: 4.1.1
+      element-plus: 2.2.32(vue@3.2.47)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /vue@3.2.47:
     resolution: {integrity: sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ==}
