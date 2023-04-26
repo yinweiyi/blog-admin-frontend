@@ -1,74 +1,85 @@
 <template>
   <div class="app-container">
-    <div class="toolbar-wrapper">
-      <div class="app-form">
-        <el-form :model="formData" label-position="right" label-width="100px" :inline="true">
-          <el-form-item label="请选择模型">
-            <el-select v-model="formData.model_id">
-              <el-option :value="0" label="请选择"></el-option>
-              <el-option v-for="item in models" :key="item.id" :label="item.name" :value="item.id"/>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="getTableData(true)" type="primary">搜索</el-button>
-          </el-form-item>
-        </el-form>
+    <el-card shadow="none" v-loading="loading">
+      <div class="toolbar-wrapper">
+        <div class="app-form">
+          <el-form :model="formData" label-position="right" label-width="100px" :inline="true">
+            <el-form-item label="请选择模型">
+              <el-select v-model="formData.model_id">
+                <el-option :value="0" label="请选择"></el-option>
+                <el-option v-for="item in models" :key="item.id" :label="item.name" :value="item.id"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="getTableData(true)" type="primary">搜索</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <el-button type="primary" :icon="CirclePlus" @click="handleAdd">新增图片</el-button>
       </div>
-      <el-button type="primary" :icon="CirclePlus" @click="handleAdd">新增图片</el-button>
-    </div>
-    <Waterfall
-      :list="tableData"
-      :row-key="options.rowKey"
-      :gutter="options.gutter"
-      :has-around-gutter="options.hasAroundGutter"
-      :width="options.width"
-      :breakpoints="options.breakpoints"
-      :img-selector="options.imgSelector"
-      :background-color="options.backgroundColor"
-      :animation-effect="options.animationEffect"
-      :animation-duration="options.animationDuration"
-      :animation-delay="options.animationDelay"
-      :lazyload="options.lazyload"
-      :load-props="options.loadProps"
-    >
-      <template #item="{ item, url, index }">
-        <div
-          class="bg-gray-900 rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-linear hover:shadow-lg hover:shadow-gray-600 group">
-          <div class="overflow-hidden">
-            <LazyImg :url="item.image_url"
-                     class="cursor-pointer transition-all duration-300 ease-linear group-hover:scale-105"/>
-          </div>
-          <div class="px-4 pt-2 pb-4 border-t border-t-gray-800">
-            <div class="pt-3 flex justify-between items-center border-t border-t-gray-600 border-opacity-50">
-              <div class="text-gray-50">
-                <el-button type="primary" size="small" style="border-radius:12px" @click.stop="handleEdit(item)">
-                  编辑
-                </el-button>
-              </div>
-              <div>
-                <el-popconfirm
-                  :icon="InfoFilled"
-                  icon-color="#626AEF"
-                  title="真的要删除此条数据吗？"
-                  @confirm="handleDelete(item, index)"
-                >
-                  <template #reference>
-                    <el-button type="danger" size="small" style="border-radius:12px">
-                      删除
-                    </el-button>
-                  </template>
-                </el-popconfirm>
 
+      <Waterfall
+        :list="tableData"
+        :row-key="options.rowKey"
+        :gutter="options.gutter"
+        :has-around-gutter="options.hasAroundGutter"
+        :width="options.width"
+        :breakpoints="options.breakpoints"
+        :img-selector="options.imgSelector"
+        :background-color="options.backgroundColor"
+        :animation-effect="options.animationEffect"
+        :animation-duration="options.animationDuration"
+        :animation-delay="options.animationDelay"
+        :lazyload="options.lazyload"
+        :load-props="options.loadProps"
+      >
+        <template #item="{ item, url, index }">
+          <div
+            class="bg-gray-900 rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-linear hover:shadow-lg hover:shadow-gray-600 group">
+            <div class="overflow-hidden">
+              <LazyImg :url="item.image_url"
+                       class="cursor-pointer transition-all duration-300 ease-linear group-hover:scale-105"/>
+            </div>
+            <div class="px-4 pt-2 pb-4 border-t border-t-gray-800">
+              <div class="pt-3 flex  items-center border-t border-t-gray-600 border-opacity-50">
+                <div class="text-gray-50 mr-3">
+                  <el-button type="primary" :icon="Edit" size="small" style="border-radius:12px"
+                             @click.stop="handleEdit(item)">
+                  </el-button>
+                </div>
+                <div class="text-gray-50 mr-3">
+                  <el-button size="small" type="success" style="border-radius:12px">
+                    👍 {{ item.likes }}
+                  </el-button>
+                </div>
+                <div class="text-gray-50 mr-3">
+                  <el-button size="small" type="warning" style="border-radius:12px">
+                    ❤️ {{ item.hearts }}
+                  </el-button>
+                </div>
+                <div class="text-gray-50 mr-3">
+                  <el-popconfirm
+                    :icon="InfoFilled"
+                    icon-color="#626AEF"
+                    title="真的要删除此条数据吗？"
+                    @confirm="handleDelete(item, index)"
+                  >
+                    <template #reference>
+                      <el-button type="danger" size="small" :icon="Delete" style="border-radius:12px">
+                      </el-button>
+                    </template>
+                  </el-popconfirm>
+
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </template>
-    </Waterfall>
+        </template>
+      </Waterfall>
 
-    <Image v-model:show-dialog="showImageDialog" :models="models" v-model:image="image" v-if="showImageDialog"
-           @handleSubmit="handleSubmit"/>
-
+      <Image v-model:show-dialog="showImageDialog" :models="models" v-model:image="image" v-if="showImageDialog"
+             @handleSubmit="handleSubmit"/>
+    </el-card>
   </div>
 </template>
 
@@ -80,7 +91,7 @@ import {IGetTableData as IModelData} from "@/api/image-model/types/table";
 import {getTableDataApi, storeImage, updateImage, deleteImage} from "@/api/image";
 import {getTableDataApi as getModelApi} from "@/api/image-model";
 import {usePagination} from "@/hooks/usePagination";
-import {CirclePlus, InfoFilled} from "@element-plus/icons-vue"
+import {CirclePlus, InfoFilled, Edit, Delete} from "@element-plus/icons-vue"
 import Image from "./components/Image.vue"
 import {IImage} from "@/views/image/image/components/data";
 import {ElMessage} from "element-plus";
@@ -239,7 +250,7 @@ const options = reactive({
   // 动画延迟
   animationDelay: 300,
   // 背景色
-  backgroundColor: '#f2f3f5',
+  backgroundColor: '#fff',
   // imgSelector
   imgSelector: 'src.original',
   // 加载配置
