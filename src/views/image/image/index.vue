@@ -239,7 +239,7 @@ const options = reactive({
   // 动画延迟
   animationDelay: 300,
   // 背景色
-  backgroundColor: '#151515',
+  backgroundColor: '#f2f3f5',
   // imgSelector
   imgSelector: 'src.original',
   // 加载配置
