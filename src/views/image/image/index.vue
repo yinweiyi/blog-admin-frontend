@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-card shadow="none" v-loading="loading">
+    <el-card shadow="never" v-loading="loading">
       <div class="toolbar-wrapper">
         <div class="app-form">
           <el-form :model="formData" label-position="right" label-width="100px" :inline="true">
@@ -142,7 +142,7 @@ const handleDelete = (row: IGetTableData, index: number) => {
   })
 }
 
-const handleSubmit = () => {
+const handleSubmit = (goOn: Boolean) => {
   if (image.value.id > 0) {
     updateImage(image.value.id, image.value).then(() => {
       ElMessage.success("更新成功")
@@ -151,7 +151,9 @@ const handleSubmit = () => {
   } else {
     storeImage(image.value).then(() => {
       ElMessage.success("添加成功")
-      showImageDialog.value = false
+      if (!goOn) {
+        showImageDialog.value = false
+      }
       tableData.value.unshift(image.value)
     })
   }

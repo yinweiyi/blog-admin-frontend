@@ -53,7 +53,8 @@
         </el-form>
 
         <el-form-item style="padding-left: 150px">
-          <el-button type="primary" @click="handleSubmit">保存</el-button>
+          <el-button type="primary" @click="handleSubmit(false)">保存</el-button>
+          <el-button type="success" v-if="image.id === 0" @click="handleSubmit(true)">保存并继续</el-button>
           <el-button style="margin-left: 10px" @click="handleCancel">取消</el-button>
         </el-form-item>
       </el-card>
@@ -144,11 +145,11 @@ const formRules = reactive<FormRules>({
   ],
 })
 
-const handleSubmit = () => {
+const handleSubmit = (goOn: Boolean) => {
   formRef.value?.validate((valid: boolean) => {
     if (valid) {
       emit("update:image", image.value)
-      emit("handleSubmit")
+      emit("handleSubmit", goOn)
     } else {
       return false
     }
