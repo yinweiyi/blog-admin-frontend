@@ -65,6 +65,8 @@ const defaultImageModel = {
   order: 0,
   name: '',
   download_url: '',
+  default_prompt: '',
+  default_negative_prompt: '',
   description: ''
 };
 

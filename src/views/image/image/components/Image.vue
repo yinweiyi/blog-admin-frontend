@@ -4,7 +4,7 @@
       <el-card shadow="never">
         <el-form :model="image" ref="formRef" label-position="right" label-width="120px" :rules="formRules">
           <el-form-item label="模型" prop="image_model_id">
-            <el-select v-model="image.image_model_id">
+            <el-select v-model="image.image_model_id" @change="onChangeModel">
               <el-option :value="0" label="请选择"></el-option>
               <el-option v-for="item in models" :key="item.id" :label="item.name" :value="item.id"/>
             </el-select>
@@ -144,6 +144,16 @@ const formRules = reactive<FormRules>({
     {required: true, message: "反向提示词不能为空", trigger: 'blur'},
   ],
 })
+
+const onChangeModel = (val: number) => {
+  if (val) {
+    const model = props.models.find(item => item.id === val)
+    if (model) {
+      image.value.prompt = model.default_prompt;
+      image.value.negative_prompt = model.default_negative_prompt;
+    }
+  }
+}
 
 const handleSubmit = (goOn: Boolean) => {
   formRef.value?.validate((valid: boolean) => {

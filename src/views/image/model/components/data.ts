@@ -5,5 +5,7 @@ export interface IImageModel {
   order: number
   name: string
   download_url: string
+  default_prompt: string
+  default_negative_prompt: string
   description: string
 }

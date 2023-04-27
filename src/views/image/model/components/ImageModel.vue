@@ -15,6 +15,12 @@
           <el-form-item label="排序：" prop="order">
             <el-input-number class="form-input" v-model="imageModel.order"/>
           </el-form-item>
+          <el-form-item label="提示语：" prop="default_prompt">
+            <el-input type="textarea" class="form-input textarea" :rows="6" v-model="imageModel.default_prompt"/>
+          </el-form-item>
+          <el-form-item label="反向提示语：" prop="default_negative_prompt">
+            <el-input type="textarea" class="form-input textarea" :rows="6" v-model="imageModel.default_negative_prompt"/>
+          </el-form-item>
           <el-form-item label="描述：" prop="description">
             <t-editor v-model:content="imageModel.description" placeholder="输入描述"/>
           </el-form-item>
@@ -76,6 +82,12 @@ const formRules = reactive<FormRules>({
   ],
   download_url: [
     {required: true, message: "下载地址不能为空", trigger: 'blur'},
+  ],
+  default_prompt: [
+    {required: true, message: "提示语不能为空", trigger: 'blur'},
+  ],
+  default_negative_prompt: [
+    {required: true, message: "反向提示语不能为空", trigger: 'blur'},
   ],
 })
 
