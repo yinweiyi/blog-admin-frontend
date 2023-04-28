@@ -11,7 +11,7 @@
           </el-form-item>
 
           <el-form-item label="图片：" prop="image_url">
-            <ImageUpload v-model:imageUrl="image.image_url" @getImageData="getImageData"/>
+            <ImageUpload v-model:imageUrl="image.image_url" :max-width="500" @getImageData="getImageData"/>
           </el-form-item>
 
           <el-form-item label="Prompt：" prop="prompt">
