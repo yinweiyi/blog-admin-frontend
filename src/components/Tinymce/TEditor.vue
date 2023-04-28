@@ -41,6 +41,12 @@ const props = defineProps({
       return ""
     },
   },
+  imagePrefix: {
+    type: String,
+    default: () => {
+      return "baigei"
+    },
+  },
   disabled: {
     type: Boolean,
     default: false,
@@ -88,6 +94,7 @@ const init = reactive({
     } else {
       const formData = new FormData()
       formData.append('file', blobInfo.blob())
+      formData.append('prefix', props.imagePrefix)
 
       upload(formData).then(res => {
         resolve(res.data.link)  //上传成功，在成功函数里填入图片路径

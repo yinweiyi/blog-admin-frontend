@@ -38,7 +38,7 @@
         </el-form-item>
 
         <el-form-item label="内容：" prop="html" v-if="formData.content_type === 2">
-          <TEditor v-model:content="formData.html"></TEditor>
+          <TEditor v-model:content="formData.html" image-prefix="article"></TEditor>
         </el-form-item>
         <el-form-item label="排序：" prop="order">
           <el-input-number class="form-input" v-model="formData.order"/>

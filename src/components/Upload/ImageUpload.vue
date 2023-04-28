@@ -27,16 +27,10 @@ const props = defineProps({
       return ""
     },
   },
-  prefix: {
+  imagePrefix: {
     type: String,
     default: () => {
-      return ""
-    },
-  },
-  maxWidth: {
-    type: Number,
-    default: () => {
-      return 0
+      return "baigei"
     },
   }
 })
@@ -55,8 +49,7 @@ const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
 const customRequest = () => {
   const formData = new FormData()
   formData.append('file', file.value)
-  formData.append('prefix', props.prefix)
-  formData.append('maxWidth', props.maxWidth + '')
+  formData.append('prefix', props.imagePrefix)
 
   upload(formData).then(res => {
     imageUrl.value = res.data.link  //上传成功，在成功函数里填入图片路径

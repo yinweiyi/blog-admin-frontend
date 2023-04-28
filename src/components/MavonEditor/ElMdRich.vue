@@ -33,6 +33,7 @@ const props = withDefaults(
     placeholder?: string;
     autofocus?: boolean;
     width?: string;
+    imagePrefix?: string;
   }>(),
   {
     content: '',
@@ -42,6 +43,7 @@ const props = withDefaults(
     placeholder: '',
     autofocus: false,
     width: '100%',
+    imagePrefix: 'baigei'
   },
 );
 
@@ -103,6 +105,7 @@ watch(
 const imgAdd = (pos: number, $file: any) => {
   let formData = new FormData();
   formData.append('file', $file);
+  formData.append('prefix', props.imagePrefix);
 
   upload(formData).then(res => {
     mavon.value.$img2Url(pos, res.data.link);

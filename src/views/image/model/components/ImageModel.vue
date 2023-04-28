@@ -22,7 +22,7 @@
             <el-input type="textarea" class="form-input textarea" :rows="6" v-model="imageModel.default_negative_prompt"/>
           </el-form-item>
           <el-form-item label="描述：" prop="description">
-            <t-editor v-model:content="imageModel.description" placeholder="输入描述"/>
+            <t-editor v-model:content="imageModel.description" image-prefix="image-model" placeholder="输入描述"/>
           </el-form-item>
         </el-form>
 
