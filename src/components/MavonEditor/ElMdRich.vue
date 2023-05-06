@@ -108,7 +108,7 @@ const imgAdd = (pos: number, $file: any) => {
   formData.append('prefix', props.imagePrefix);
 
   upload(formData).then(res => {
-    mavon.value.$img2Url(pos, res.data.link);
+    mavon.value.$img2Url(pos, res.data.link + '?imageMogr2/format/webp');
   })
 };
 const change = (val: string) => {

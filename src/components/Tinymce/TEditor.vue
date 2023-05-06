@@ -97,7 +97,7 @@ const init = reactive({
       formData.append('prefix', props.imagePrefix)
 
       upload(formData).then(res => {
-        resolve(res.data.link)  //上传成功，在成功函数里填入图片路径
+        resolve(res.data.link + '?imageMogr2/format/webp')  //上传成功，在成功函数里填入图片路径
       }).catch(() => {
         ElMessage.error('上传失败.')
       })
