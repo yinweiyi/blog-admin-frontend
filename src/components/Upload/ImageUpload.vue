@@ -53,7 +53,7 @@ const customRequest = () => {
 
   upload(formData).then(res => {
     imageUrl.value = res.data.link  //上传成功，在成功函数里填入图片路径
-    emits('update:imageUrl', res.data.link)
+    emits('update:imageUrl', res.data.link + '?imageMogr2/format/webp')
     emits('getImageData', res.data)
   }).catch(() => {
     ElMessage.error('上传失败.')
