@@ -69,9 +69,18 @@ const state = reactive({
   loading: false
 });
 
-const image = ref<IImage>(props.image)
+const image = ref<IImage>({
+  id: 0,
+  image_url: "",
+  width: 0,
+  height: 0,
+  prompt: "",
+  negative_prompt: "",
+  order: 0,
+  image_model_id: 0
+})
 
-watch(() => props.image, (newValue) => {
+watch(props.image, (newValue) => {
   image.value = newValue
 })
 

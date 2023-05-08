@@ -37,7 +37,11 @@ const props = defineProps({
 
 const emits = defineEmits(["update:imageUrl", "getImageData"])
 
-const imageUrl = ref(props.imageUrl)
+const imageUrl = ref('')
+
+watch(() => props.imageUrl, (newValue) => {
+  imageUrl.value = newValue
+})
 
 const file = ref()
 
