@@ -6,23 +6,11 @@
           <el-form-item label="名称：" prop="name">
             <el-input class="form-input" v-model="imageModel.name" placeholder="请输入分类名"/>
           </el-form-item>
-          <el-form-item label="模型大小：" prop="size">
-            <el-input-number class="form-input" :precision="2" :step="0.1" v-model="imageModel.size"/>
-          </el-form-item>
-          <el-form-item label="下载地址：" prop="download_url">
-            <el-input class="form-input" v-model="imageModel.download_url" placeholder="请输入模型下载地址"/>
-          </el-form-item>
           <el-form-item label="排序：" prop="order">
             <el-input-number class="form-input" v-model="imageModel.order"/>
           </el-form-item>
-          <el-form-item label="提示语：" prop="default_prompt">
-            <el-input type="textarea" class="form-input textarea" :rows="6" v-model="imageModel.default_prompt"/>
-          </el-form-item>
-          <el-form-item label="反向提示语：" prop="default_negative_prompt">
-            <el-input type="textarea" class="form-input textarea" :rows="6" v-model="imageModel.default_negative_prompt"/>
-          </el-form-item>
           <el-form-item label="描述：" prop="description">
-            <t-editor v-model:content="imageModel.description" image-prefix="image-model" placeholder="输入描述"/>
+            <TEditor v-model:content="imageModel.description" image-prefix="image-model" placeholder="输入描述"/>
           </el-form-item>
         </el-form>
 
@@ -36,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, computed, PropType} from "vue";
+import {reactive, ref, computed, PropType} from "vue";
 import {FormInstance, FormRules} from "element-plus";
 import {IImageModel} from "@/views/image/model/components/data";
 import TEditor from "@/components/Tinymce/TEditor.vue";

@@ -114,11 +114,6 @@ const defaultImage = {
   height: 0,
   prompt: "",
   negative_prompt: "",
-  cfg_scale: 7,
-  steps: 40,
-  sampler: "DPM++ SDE Karras",
-  seed: -1,
-  clip_skip: 2,
   order: 0,
   image_model_id: 0
 }

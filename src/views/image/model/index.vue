@@ -7,13 +7,7 @@
       <div class="table-wrapper">
         <el-table :data="tableData" row-key="id" border default-expand-all>
           <el-table-column prop="name" label="模型名" align="center"></el-table-column>
-          <el-table-column prop="size" label="模型大小(M)" align="center" width="120"></el-table-column>
           <el-table-column prop="order" label="排序" align="center" sortable width="80"></el-table-column>
-          <el-table-column label="下载地址" align="center">
-            <template #default="{row}">
-              <a :href="row.download_url" target="_blank">{{ row.download_url }}</a>
-            </template>
-          </el-table-column>
           <el-table-column prop="created_at" label="创建时间" align="center"/>
           <el-table-column fixed="right" label="操作" width="240" align="center">
             <template #default="{row}">
@@ -61,12 +55,8 @@ const router = useRouter()
 
 const defaultImageModel = {
   id: 0,
-  size: 0,
   order: 0,
   name: '',
-  download_url: '',
-  default_prompt: '',
-  default_negative_prompt: '',
   description: ''
 };
 

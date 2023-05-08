@@ -7,7 +7,7 @@
 //JS部分
 //在js中引入所需的主题和组件
 import tinymce from 'tinymce/tinymce'
-import 'tinymce/skins/content/default/content.css'
+// import 'tinymce/skins/content/default/content.css'
 import Editor from '@tinymce/tinymce-vue'
 import 'tinymce/themes/silver'
 import 'tinymce/themes/silver/theme'
