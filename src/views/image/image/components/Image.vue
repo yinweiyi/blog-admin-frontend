@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref, PropType} from "vue";
+import {reactive, ref, PropType, watch} from "vue";
 import {FormInstance, FormRules} from "element-plus";
 import {IImage} from "@/views/image/image/components/data";
 import ImageUpload from "@/components/Upload/ImageUpload.vue"
@@ -70,6 +70,10 @@ const state = reactive({
 });
 
 const image = ref<IImage>(props.image)
+
+watch(() => props.image, (newValue) => {
+  image.value = newValue
+})
 
 // 关闭弹窗
 const onBeforeClose = (down: Function) => {
