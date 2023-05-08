@@ -146,7 +146,9 @@ const handleSubmit = (goOn: Boolean) => {
   } else {
     storeImage(image.value).then(() => {
       ElMessage.success("添加成功")
-      if (!goOn) {
+      if (goOn) {
+        image.value.image_url = ''
+      } else {
         showImageDialog.value = false
       }
       tableData.value.unshift(image.value)
