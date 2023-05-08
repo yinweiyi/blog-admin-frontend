@@ -34,7 +34,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="内容：" prop="markdown" v-if="formData.content_type === 1">
-          <ElMdRich v-model:content="formData.markdown" placeholder="请输入" edit-preview="edit" rich-height="400px"/>
+          <ElMdRich v-model:content="formData.markdown" placeholder="请输入" image-prefix="article" edit-preview="edit" rich-height="400px"/>
         </el-form-item>
 
         <el-form-item label="内容：" prop="html" v-if="formData.content_type === 2">
