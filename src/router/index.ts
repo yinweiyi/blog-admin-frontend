@@ -168,6 +168,34 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: "/ofa",
+    component: Layout,
+    redirect: "/ofa/menu",
+    name: "Image",
+    meta: {
+      title: "公众号",
+      elIcon: "ChatSquare"
+    },
+    children: [
+      {
+        path: "menus",
+        component: () => import("@/views/wechat/menu/index.vue"),
+        name: "Menus",
+        meta: {
+          title: "公众号菜单",
+        }
+      },
+      {
+        path: "materials",
+        component: () => import("@/views/wechat/material/index.vue"),
+        name: "Materials",
+        meta: {
+          title: "素材管理",
+        }
+      }
+    ]
+  },
+  {
     path: "/other",
     component: Layout,
     redirect: "/other/friendships",
