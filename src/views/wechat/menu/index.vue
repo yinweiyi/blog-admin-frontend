@@ -82,7 +82,7 @@ const formRef = reactive({
   selectedMenuIndex: 0,//当前选中菜单索引
   selectedSubMenuIndex: 0,//当前选中子菜单索引
   selectedMenuLevel: 0,//选中菜单级别
-  selectedButton: '',//选中的菜单按钮
+  selectedButton: {},//选中的菜单按钮
   onDragOverMenu: '' //当前鼠标拖动到的位置
 })
 
@@ -97,7 +97,7 @@ const unSelectMenu = () => {//不选中任何菜单
   formRef.selectedMenuLevel = 0
   formRef.selectedMenuIndex = 0
   formRef.selectedSubMenuIndex = 0
-  formRef.selectedButton = ''
+  formRef.selectedButton = {}
 }
 
 //选中子菜单
