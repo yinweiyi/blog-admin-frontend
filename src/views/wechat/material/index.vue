@@ -24,8 +24,8 @@
           <div
             class="bg-gray-900 rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-linear hover:shadow-lg hover:shadow-gray-600 group">
             <div class="overflow-hidden">
-              <LazyImg :url="item.url"
-                       class="cursor-pointer transition-all duration-300 ease-linear group-hover:scale-105"/>
+              <el-image :src="item.url"
+                       class="cursor-pointer transition-all duration-300 ease-linear group-hover:scale-105 w-full"/>
             </div>
             <div class="px-4 pt-2 pb-4 border-t border-t-gray-800">
               <div class="pt-3 flex  items-center border-t border-t-gray-600 border-opacity-50">
