@@ -42,22 +42,22 @@
             </div>
             <div class="px-4 pt-2 pb-4 border-t border-t-gray-800">
               <div class="pt-3 flex  items-center border-t border-t-gray-600 border-opacity-50">
-                <div class="text-gray-50 mr-3">
-                  <el-button type="primary" :icon="Edit" size="small" style="border-radius:12px"
+                <div class="text-gray-50 flex-1">
+                  <el-button type="primary" :icon="Edit" size="small" style="border-radius:12px; width: 90%"
                              @click.stop="handleEdit(item)">
                   </el-button>
                 </div>
-                <div class="text-gray-50 mr-3">
-                  <el-button size="small" type="success" style="border-radius:12px">
+                <div class="text-gray-50 flex-1">
+                  <el-button size="small" type="success" style="border-radius:12px; width: 90%">
                     👍 {{ item.likes }}
                   </el-button>
                 </div>
-                <div class="text-gray-50 mr-3">
-                  <el-button size="small" type="warning" style="border-radius:12px">
+                <div class="text-gray-50 flex-1">
+                  <el-button size="small" type="warning" style="border-radius:12px; width: 90%">
                     ❤️ {{ item.hearts }}
                   </el-button>
                 </div>
-                <div class="text-gray-50 mr-3">
+                <div class="text-gray-50 flex-1">
                   <el-popconfirm
                     :icon="InfoFilled"
                     icon-color="#626AEF"
@@ -65,7 +65,7 @@
                     @confirm="handleDelete(item, index)"
                   >
                     <template #reference>
-                      <el-button type="danger" size="small" :icon="Delete" style="border-radius:12px">
+                      <el-button type="danger" size="small" :icon="Delete" style="border-radius:12px; width: 90%">
                       </el-button>
                     </template>
                   </el-popconfirm>

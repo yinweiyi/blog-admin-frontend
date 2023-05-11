@@ -171,7 +171,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: "/ofa",
     component: Layout,
     redirect: "/ofa/menu",
-    name: "Image",
+    name: "Ofa",
     meta: {
       title: "公众号",
       elIcon: "ChatSquare"
