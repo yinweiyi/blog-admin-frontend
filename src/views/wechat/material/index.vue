@@ -13,8 +13,8 @@
           <div class="text-cut-name">{{ item.name }}</div>
           <div class="flex justify-between align-center">
             <div class="text-gray-50 flex-1">
-              <el-button type="primary" :icon="Edit" size="small" style="border-radius:12px; width: 90%"
-                         @click="handleCopy(item.media_id)">
+              <el-button type="primary" :icon="CopyDocument" size="small" style="border-radius:12px; width: 90%"
+                         @click="handleCopy(item.media_id)">复制
               </el-button>
             </div>
 
@@ -27,6 +27,7 @@
               >
                 <template #reference>
                   <el-button type="danger" size="small" :icon="Delete" style="border-radius:12px; width: 90%">
+                    删除
                   </el-button>
                 </template>
               </el-popconfirm>
@@ -46,7 +47,7 @@ import {onMounted, reactive, ref} from "vue";
 import {IMaterial, IGetMaterialParam} from "@/api/wechat/types/type";
 import {getMaterial, deleteMaterial} from "@/api/wechat/ofaMaterial";
 import {usePagination} from "@/hooks/usePagination";
-import {CirclePlus, InfoFilled, Edit, Delete} from "@element-plus/icons-vue"
+import {CirclePlus, InfoFilled, CopyDocument , Delete} from "@element-plus/icons-vue"
 import Material from "./components/Material.vue"
 import {ElMessage} from "element-plus";
 import 'vue-waterfall-plugin-next/dist/style.css'
