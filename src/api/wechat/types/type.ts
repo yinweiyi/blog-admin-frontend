@@ -1,34 +1,23 @@
-export interface Menu {
+export interface IMenu {
   button: Array<any>
 }
 
-export interface Parent {
+export interface IMaterial {
+  media_id: string
   name: string
-  sub_button: Array<any>
-}
-
-export interface Click {
-  type: string,
-  name: string,
-  key: string
-}
-
-export interface View {
-  type: string,
-  name: string,
+  update_time: string
   url: string
 }
 
-export interface Miniprogram {
-  type: string,
-  name: string,
-  url: string,
-  appid: string,
-  pagepath: string
+export interface IGetMaterialParam {
+  type: string
+  /** 当前页码 */
+  page: number
+  /** 查询条数 */
+  pageSize: number
 }
 
-export interface Midia {
-  type: string,
-  name: string,
-  media_id: string
-}
+export type GetTableResponseData = IApiResponseData<{
+  list: IMaterial[]
+  total: number
+}>

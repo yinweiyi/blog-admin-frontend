@@ -76,7 +76,7 @@ defineOptions({
 })
 
 const defaultMenu = { button: [] };
-const menus = ref<MenuType.Menu>(Object.assign({}, defaultMenu))
+const menus = ref<MenuType.IMenu>(Object.assign({}, defaultMenu))
 
 const formRef = reactive({
   selectedMenuIndex: 0,//当前选中菜单索引
