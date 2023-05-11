@@ -5,7 +5,7 @@
         <el-button type="primary" :icon="CirclePlus" @click="handleAdd">新增素材</el-button>
       </div>
 
-      <div class="card" v-for="item in tableData" :key="item.media_id">
+      <div class="card" v-for="(item,index) in tableData" :key="item.media_id">
         <el-image class="card-image" :src="item.url" :preview-src-list="[item.url]"
                   fit="contain" lazy></el-image>
 
