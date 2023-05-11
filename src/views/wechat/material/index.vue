@@ -5,56 +5,39 @@
         <el-button type="primary" :icon="CirclePlus" @click="handleAdd">新增素材</el-button>
       </div>
 
-      <Waterfall
-        :list="tableData"
-        :row-key="options.rowKey"
-        :gutter="options.gutter"
-        :has-around-gutter="options.hasAroundGutter"
-        :width="options.width"
-        :breakpoints="options.breakpoints"
-        :img-selector="options.imgSelector"
-        :background-color="options.backgroundColor"
-        :animation-effect="options.animationEffect"
-        :animation-duration="options.animationDuration"
-        :animation-delay="options.animationDelay"
-        :lazyload="options.lazyload"
-        :load-props="options.loadProps"
-      >
-        <template #item="{ item, url, index }">
-          <div
-            class="bg-gray-900 rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-linear hover:shadow-lg hover:shadow-gray-600 group">
-            <div class="overflow-hidden">
-              <el-image :src="item.url"
-                       class="cursor-pointer transition-all duration-300 ease-linear group-hover:scale-105 w-full"/>
+      <div class="card" v-for="item in tableData" :key="item.media_id">
+        <el-image class="card-image" :src="item.url" :preview-src-list="[item.url]"
+                  fit="contain" lazy></el-image>
+
+        <div class="card-footer">
+          <div class="text-cut-name">{{ item.name }}</div>
+          <div class="flex justify-between align-center">
+            <div class="text-gray-50 flex-1">
+              <el-button type="primary" :icon="Edit" size="small" style="border-radius:12px; width: 90%"
+                         @click.stop="handleCopy(item)">
+              </el-button>
             </div>
-            <div class="px-4 pt-2 pb-4 border-t border-t-gray-800">
-              <div class="pt-3 flex  items-center border-t border-t-gray-600 border-opacity-50">
-                <div class="text-gray-50 flex-1">
-                  <el-button type="primary" :icon="Edit" size="small" style="border-radius:12px; width: 90%"
-                             @click.stop="handleCopy(item)">
+
+            <div class="text-gray-50 flex-1">
+              <el-popconfirm
+                :icon="InfoFilled"
+                icon-color="#626AEF"
+                title="真的要删除此条数据吗？"
+                @confirm="handleDelete(item, index)"
+              >
+                <template #reference>
+                  <el-button type="danger" size="small" :icon="Delete" style="border-radius:12px; width: 90%">
                   </el-button>
-                </div>
-                <div class="text-gray-50 flex-1">
-                  <el-popconfirm
-                    :icon="InfoFilled"
-                    icon-color="#626AEF"
-                    title="真的要删除此条数据吗？"
-                    @confirm="handleDelete(item, index)"
-                  >
-                    <template #reference>
-                      <el-button type="danger" size="small" :icon="Delete" style="border-radius:12px; width: 90%">
-                      </el-button>
-                    </template>
-                  </el-popconfirm>
-
-                </div>
-              </div>
+                </template>
+              </el-popconfirm>
             </div>
-          </div>
-        </template>
-      </Waterfall>
 
-      <Material v-model:show-dialog="showMaterialDialog" v-if="showMaterialDialog" @refresh="getTableData(true)" @handleSubmit="handleSubmit"/>
+
+          </div>
+        </div>
+      </div>
+
+      <Material v-model:show-dialog="showMaterialDialog" v-if="showMaterialDialog" @refresh="getTableData(true)"/>
     </el-card>
   </div>
 </template>
@@ -68,9 +51,6 @@ import {usePagination} from "@/hooks/usePagination";
 import {CirclePlus, InfoFilled, Edit, Delete} from "@element-plus/icons-vue"
 import Material from "./components/Material.vue"
 import {ElMessage} from "element-plus";
-import loadingPng from "@/assets/waterfall/loading.png"
-import errorPng from "@/assets/waterfall/error.png"
-import {LazyImg, Waterfall} from 'vue-waterfall-plugin-next'
 import 'vue-waterfall-plugin-next/dist/style.css'
 
 defineOptions({
@@ -79,7 +59,6 @@ defineOptions({
 
 
 const showMaterialDialog = ref<boolean>(false)
-
 
 
 const handleAdd = () => {
@@ -93,17 +72,6 @@ const handleDelete = (row: IMaterial, index: number) => {
   })
 }
 
-const handleSubmit = (goOn: Boolean) => {
-    // storeMaterial(image.value).then(() => {
-    //   ElMessage.success("添加成功")
-    //   if (goOn) {
-    //     image.value.image_url = ''
-    //   } else {
-    //     showMaterialDialog.value = false
-    //   }
-    //   tableData.value.unshift(image.value)
-    // })
-}
 
 const handleCopy = (row: IMaterial) => {
   // storeMaterial(image.value).then(() => {
@@ -169,50 +137,6 @@ const onScroll = () => {
   }
 }
 
-const options = reactive({
-  // 唯一key值
-  rowKey: 'id',
-  // 卡片之间的间隙
-  gutter: 10,
-  // 是否有周围的gutter
-  hasAroundGutter: true,
-  // 卡片在PC上的宽度
-  width: 320,
-  // 自定义行显示个数，主要用于对移动端的适配
-  breakpoints: {
-    1200: {
-      // 当屏幕宽度小于等于1200
-      rowPerView: 4,
-    },
-    800: {
-      // 当屏幕宽度小于等于800
-      rowPerView: 3,
-    },
-    500: {
-      // 当屏幕宽度小于等于500
-      rowPerView: 2,
-    },
-  },
-  // 动画效果
-  animationEffect: 'animate__fadeInUp',
-  // 动画时间
-  animationDuration: 1000,
-  // 动画延迟
-  animationDelay: 300,
-  // 背景色
-  backgroundColor: '#fff',
-  // imgSelector
-  imgSelector: 'src.original',
-  // 加载配置
-  loadProps: {
-    loadingPng,
-    errorPng,
-  },
-  // 是否懒加载
-  lazyload: true,
-
-})
-
 onMounted(() => {
   document.querySelector('.app-main')?.addEventListener('scroll', onScroll);
   getTableData(true)
@@ -224,6 +148,52 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+
+.card {
+  width: 240px;
+  display: inline-block;
+  background: #FFFFFF;
+  border: 1px solid #EBEEF5;
+  box-shadow: 1px 1px 20px 0 rgba(0, 0, 0, 0.1);
+  margin: 0 10px 10px 0;
+  vertical-align: top;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.card:hover {
+  border: 2px solid #66b1ff;
+  margin-bottom: 6px;
+}
+
+.card-image {
+  line-height: 170px;
+  max-height: 170px;
+  width: 100%;
+}
+
+.card-preview {
+  padding: 20px 0;
+  color: #d9d9d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-preview-icon {
+  font-size: 30px;
+  margin-right: 5px;
+}
+
+.card-preview-text {
+  font-size: 12px;
+}
+
+.card-footer {
+  color: #ccc;
+  font-size: 12px;
+  padding: 15px 10px;
 }
 
 </style>
