@@ -110,10 +110,11 @@ const onBeforeClose = (down: Function) => {
   down()
 }
 
-const fileRef = ref()
+const fileRef = ref<UploadRawFile>()
 
 const onUploadChange = (uploadFile: UploadFile) => {
   fileRef.value = uploadFile.raw
+  material.value.fileName = uploadFile.name
   return true
 }
 
