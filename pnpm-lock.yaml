@@ -19,6 +19,9 @@ dependencies:
   js-cookie:
     specifier: ^3.0.1
     version: 3.0.1
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -69,6 +72,9 @@ devDependencies:
   '@types/js-cookie':
     specifier: ^3.0.3
     version: 3.0.3
+  '@types/lodash':
+    specifier: ^4.14.194
+    version: 4.14.194
   '@types/lodash-es':
     specifier: ^4.17.6
     version: 4.17.6
@@ -885,10 +891,10 @@ packages:
   /@types/lodash-es@4.17.6:
     resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
     dependencies:
-      '@types/lodash': 4.14.191
+      '@types/lodash': 4.14.194
 
-  /@types/lodash@4.14.191:
-    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
+  /@types/lodash@4.14.194:
+    resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
 
   /@types/node@18.14.2:
     resolution: {integrity: sha512-1uEQxww3DaghA0RxqHx0O0ppVlo43pJhepY51OxuQIKHpjbnYLA7vcdwioNPzIqmC2u3I/dmylcqjlh0e7AyUA==}
@@ -2323,7 +2329,7 @@ packages:
       '@element-plus/icons-vue': 2.0.10(vue@3.2.47)
       '@floating-ui/dom': 1.2.1
       '@popperjs/core': /@sxzz/popperjs-es@2.11.7
-      '@types/lodash': 4.14.191
+      '@types/lodash': 4.14.194
       '@types/lodash-es': 4.17.6
       '@vueuse/core': 9.13.0(vue@3.2.47)
       async-validator: 4.2.5

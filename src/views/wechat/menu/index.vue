@@ -48,26 +48,35 @@
         </div>
         <!-- 菜单编辑器 -->
         <div class="weixin-menu-detail" v-if="formRef.selectedMenuLevel > 0">
-          <!--          <wx-menu-button-editor :button="selectedButton" :selectedMenuLevel="selectedMenuLevel"-->
-          <!--                                 @delMenu="delMenu"></wx-menu-button-editor>-->
+          <menu-button-editor :button="formRef.selectedButton" :selectedMenuLevel="formRef.selectedMenuLevel"
+                              @delMenu="delMenu"></menu-button-editor>
         </div>
+      </div>
+
+      <div class="weixin-btn-group">
+        <el-button type="success" :icon="Upload" @click="publishMenu">发布</el-button>
+        <el-button type="warning" :icon="Delete" @click="clearMenu">清空</el-button>
       </div>
     </el-card>
   </div>
 </template>
 
 <script lang="ts" setup>
+import _ from 'lodash';
 import {onMounted, reactive, ref} from "vue";
 import * as MenuType from "@/api/wechat/types/type";
-import {getMenu} from "@/api/wechat/ofaMenu";
+import {getMenu, publishMenu as publishOfaMenu} from "@/api/wechat/ofaMenu";
 import {ElMessage} from "element-plus";
 import {Plus} from "@element-plus/icons-vue";
+import MenuButtonEditor from './components/MenuButtonEditor.vue'
+import { Delete, Upload } from '@element-plus/icons-vue'
 
 defineOptions({
   name: "OfficialAccountMenu"
 })
 
-const menus = ref<MenuType.Menu>({button: []})
+const defaultMenu = { button: [] };
+const menus = ref<MenuType.Menu>(Object.assign({}, defaultMenu))
 
 const formRef = reactive({
   selectedMenuIndex: 0,//当前选中菜单索引
@@ -137,15 +146,46 @@ const addMenu = (level: number, i: number) => {
   }
 }
 
+const delMenu = () => {
+  if (formRef.selectedMenuLevel == 1 && confirm('删除后菜单下设置的内容将被删除')) {
+    menus.value.button.splice(formRef.selectedMenuIndex, 1);
+    unSelectMenu()
+  } else if (formRef.selectedMenuLevel == 2) {
+    menus.value.button[formRef.selectedMenuIndex].sub_button.splice(formRef.selectedSubMenuIndex, 1);
+    unSelectMenu()
+  }
+}
+
 const getWxMenu = () => {
   getMenu().then(res => {
     menus.value = res.data
     menus.value.button = menus.value.button.map(i => {
       if (i.sub_button == null) {
         i.sub_button = []
+      } else {
+        i.sub_button = i.sub_button.list
       }
-      return i;
+      return i
     })
+  })
+}
+
+const clearMenu = () => {
+  menus.value = Object.assign({}, defaultMenu)
+}
+
+const publishMenu = () => {
+  const cloneButtons = _.cloneDeep(menus.value.button);
+  const menuData = cloneButtons.map(btn => {
+    if (btn.sub_button.length == 0) {
+      delete btn.sub_button;
+    }
+    return btn;
+  })
+
+  publishOfaMenu({ button: menuData }).then(() => {
+    ElMessage.success('发布成功！')
+    getWxMenu()
   })
 }
 
@@ -171,142 +211,164 @@ onMounted(() => {
       list-style: none;
     }
   }
-}
 
 
-.weixin-preview {
-  position: relative;
-  width: 320px;
-  height: 540px;
-  float: left;
-  margin-right: 10px;
-  border: 1px solid #e7e7eb;
+  .weixin-preview {
+    position: relative;
+    width: 320px;
+    height: 540px;
+    float: left;
+    margin-right: 10px;
+    border: 1px solid #e7e7eb;
 
-  a {
-    text-decoration: none;
-    color: #616161;
-  }
-
-  //.weixin-hd .weixin-title {
-  //  color: #fff;
-  //  font-size: 15px;
-  //  width: 100%;
-  //  text-align: center;
-  //  position: absolute;
-  //  top: 33px;
-  //  left: 0;
-  //}
-
-  .weixin-header {
-    text-align: center;
-    padding: 10px 0;
-    background-color: #616161;
-    color: #ffffff;
-  }
-
-  .weixin-menu {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-top: 1px solid #e7e7e7;
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    margin-bottom: 0;
-
-    .menu-item {
-      position: relative;
-      float: left;
-      line-height: 50px;
-      height: 50px;
-      text-align: center;
-      width: 33.33%;
-      border-left: 1px solid #e7e7e7;
-      cursor: pointer;
+    a {
+      text-decoration: none;
       color: #616161;
     }
-  }
 
-  .weixin-sub-menu {
-    position: absolute;
-    bottom: 60px;
-    left: 0;
-    right: 0;
-    border-top: 1px solid #d0d0d0;
-    margin-bottom: 0;
-    background: #fafafa;
-    display: block;
-    padding: 0;
+    //.weixin-hd .weixin-title {
+    //  color: #fff;
+    //  font-size: 15px;
+    //  width: 100%;
+    //  text-align: center;
+    //  position: absolute;
+    //  top: 33px;
+    //  left: 0;
+    //}
 
-    .menu-sub-item {
-      line-height: 50px;
-      height: 50px;
+    .weixin-header {
       text-align: center;
-      width: 100%;
-      border: 1px solid #d0d0d0;
-      border-top-width: 0;
-      cursor: pointer;
-      position: relative;
-      color: #616161;
+      padding: 10px 0;
+      background-color: #616161;
+      color: #ffffff;
+    }
 
-      &.on-drag-over {
-        border-top: 2px solid #44b549;
+    .weixin-menu {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-top: 1px solid #e7e7e7;
+      background-position: 0 0;
+      background-repeat: no-repeat;
+      margin-bottom: 0;
+
+      .menu-item {
+        position: relative;
+        float: left;
+        line-height: 50px;
+        height: 50px;
+        text-align: center;
+        width: 33.33%;
+        border-left: 1px solid #e7e7e7;
+        cursor: pointer;
+        color: #616161;
       }
     }
+
+    .weixin-sub-menu {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      border-top: 1px solid #d0d0d0;
+      margin-bottom: 0;
+      background: #fafafa;
+      display: block;
+      padding: 0;
+
+      .menu-sub-item {
+        line-height: 50px;
+        height: 50px;
+        text-align: center;
+        width: 100%;
+        border: 1px solid #d0d0d0;
+        border-top-width: 0;
+        cursor: pointer;
+        position: relative;
+        color: #616161;
+
+        &.on-drag-over {
+          border-top: 2px solid #44b549;
+        }
+      }
+    }
+
+    .menu-arrow {
+      position: absolute;
+      left: 50%;
+      margin-left: -6px;
+    }
+
+    .arrow_in {
+      bottom: -4px;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-width: 6px 6px 0;
+      border-style: solid dashed dashed;
+      border-color: #fafafa transparent transparent;
+    }
+
+    .arrow_out {
+      bottom: -5px;
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-width: 6px 6px 0;
+      border-style: solid dashed dashed;
+      border-color: #d0d0d0 transparent transparent;
+    }
+
+    .menu-item .menu-item-title, .menu-sub-item .menu-item-title {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+    }
+
+    .menu-item.current, .menu-sub-item.current {
+      border: 1px solid #44b549;
+      background: #fff;
+      color: #44b549;
+    }
+
+    .menu-item:hover {
+      color: #000;
+    }
+
+    .menu-sub-item:hover {
+      background: #eee;
+    }
+
+    li.current:hover {
+      background: #fff;
+      color: #44b549;
+    }
   }
 
-  .menu-arrow {
-    position: absolute;
-    left: 50%;
-    margin-left: -6px;
+  /*菜单内容*/
+  .weixin-menu-detail {
+    width: 600px;
+    padding: 0 20px 5px;
+    background-color: #f4f5f9;
+    border: 1px solid #e7e7eb;
+    float: left;
+    min-height: 540px;
   }
 
-  .arrow_in {
-    bottom: -4px;
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-width: 6px 6px 0;
-    border-style: solid dashed dashed;
-    border-color: #fafafa transparent transparent;
-  }
-
-  .arrow_out {
-    bottom: -5px;
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-width: 6px 6px 0;
-    border-style: solid dashed dashed;
-    border-color: #d0d0d0 transparent transparent;
-  }
-
-  .menu-item .menu-item-title, .menu-sub-item .menu-item-title {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    box-sizing: border-box;
-  }
-
-  .menu-item.current, .menu-sub-item.current {
-    border: 1px solid #44b549;
-    background: #fff;
-    color: #44b549;
-  }
-
-  .menu-item:hover {
-    color: #000;
-  }
-
-  .menu-sub-item:hover {
-    background: #eee;
-  }
-
-  li.current:hover {
-    background: #fff;
-    color: #44b549;
-  }
 
 }
+.weixin-btn-group {
+  width: 100%;
+  margin: 30px 0;
+  overflow: hidden;
+
+  .btn {
+    width: 100px;
+    border-radius: 0;
+  }
+}
+
 </style>

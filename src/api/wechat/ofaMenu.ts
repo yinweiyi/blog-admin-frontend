@@ -7,3 +7,11 @@ export function getMenu() {
     method: "get",
   })
 }
+
+export function publishMenu(data: Table.Menu) {
+  return request({
+    url: "/ofa/publish-menu",
+    method: "post",
+    data
+  })
+}
