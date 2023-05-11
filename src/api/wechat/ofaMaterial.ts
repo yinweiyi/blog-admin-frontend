@@ -25,10 +25,11 @@ export function addMaterial(data: IMaterialForm) {
   })
 }
 
-export function deleteMaterial(mediaId: string) {
+export function deleteMaterial(params: {media_id: string}) {
   return request({
-    url: `/ofa/material/${mediaId}`,
+    url: `/ofa/del-material`,
     method: "delete",
+    params
   })
 }
 

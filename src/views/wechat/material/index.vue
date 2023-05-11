@@ -14,7 +14,7 @@
           <div class="flex justify-between align-center">
             <div class="text-gray-50 flex-1">
               <el-button type="primary" :icon="Edit" size="small" style="border-radius:12px; width: 90%"
-                         @click.stop="handleCopy(item)">
+                         @click="handleCopy(item.media_id)">
               </el-button>
             </div>
 
@@ -31,8 +31,6 @@
                 </template>
               </el-popconfirm>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -52,41 +50,36 @@ import {CirclePlus, InfoFilled, Edit, Delete} from "@element-plus/icons-vue"
 import Material from "./components/Material.vue"
 import {ElMessage} from "element-plus";
 import 'vue-waterfall-plugin-next/dist/style.css'
+import useClipboard from 'vue-clipboard3';
 
 defineOptions({
   name: "MaterialList"
 })
 
-
 const showMaterialDialog = ref<boolean>(false)
-
 
 const handleAdd = () => {
   showMaterialDialog.value = true
 }
 
 const handleDelete = (row: IMaterial, index: number) => {
-  deleteMaterial(row.media_id).then(() => {
+  deleteMaterial({media_id: row.media_id}).then(() => {
     ElMessage.success("删除成功")
     tableData.value.splice(index, 1)
   })
 }
 
-
-const handleCopy = (row: IMaterial) => {
-  // storeMaterial(image.value).then(() => {
-  //   ElMessage.success("添加成功")
-  //   if (goOn) {
-  //     image.value.image_url = ''
-  //   } else {
-  //     showMaterialDialog.value = false
-  //   }
-  //   tableData.value.unshift(image.value)
-  // })
+const {toClipboard} = useClipboard();
+const handleCopy = (mediaId: string) => {
+  toClipboard(mediaId).then(() => {
+    ElMessage.success('复制成功')
+  }).catch(() => {
+    ElMessage.error('复制失败')
+  })
 }
 
 
-const {paginationData, handleCurrentChange, handleSizeChange} = usePagination({pageSize: 15})
+const {paginationData} = usePagination({pageSize: 15})
 
 const emit = defineEmits(['update:showDialog'])
 

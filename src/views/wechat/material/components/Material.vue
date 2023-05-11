@@ -12,11 +12,11 @@
               :auto-upload="false"
             >
               <template #trigger>
-                <el-button type="primary">select file</el-button>
+                <el-button type="primary">选择文件</el-button>
               </template>
               <template #tip>
                 <div class="el-upload__tip text-red">
-                  limit 1 file, new file will cover the old file
+                  限制1个文件，新文件将覆盖旧文件
                 </div>
               </template>
             </el-upload>
@@ -134,9 +134,8 @@ const handleSubmit = () => {
       addMaterial(material.value).then(() => {
         ElMessage.success('添加成功')
         emit('refresh', true)
+        handleCancel()
       })
-
-      //handleCancel()
     } else {
       return false
     }
