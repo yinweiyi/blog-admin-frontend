@@ -132,6 +132,11 @@ const onScroll = () => {
 }
 
 onMounted(() => {
+  const meta = document.createElement('meta');
+  meta.setAttribute('name', 'referrer');
+  meta.setAttribute('content', 'no-referrer');
+  document.head.appendChild(meta);
+
   document.querySelector('.app-main')?.addEventListener('scroll', onScroll);
   getTableData(true)
 })
