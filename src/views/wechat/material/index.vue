@@ -36,18 +36,32 @@
         </div>
       </div>
 
-      <Material v-model:show-dialog="showMaterialDialog" v-if="showMaterialDialog" @refresh="getTableData(true)"/>
+      <Material v-model:show-dialog="showMaterialDialog" v-if="showMaterialDialog" @refresh="getTableData"/>
+
+      <div class="pager-wrapper">
+        <el-pagination
+          background
+          :layout="paginationData.layout"
+          :page-sizes="paginationData.pageSizes"
+          :total="paginationData.total"
+          :page-size="paginationData.pageSize"
+          :currentPage="paginationData.currentPage"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
+
     </el-card>
   </div>
 </template>
 
 <script lang="ts" setup>
 
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import {IMaterial, IGetMaterialParam} from "@/api/wechat/types/type";
 import {getMaterial, deleteMaterial} from "@/api/wechat/ofaMaterial";
 import {usePagination} from "@/hooks/usePagination";
-import {CirclePlus, InfoFilled, CopyDocument , Delete} from "@element-plus/icons-vue"
+import {CirclePlus, InfoFilled, CopyDocument, Delete} from "@element-plus/icons-vue"
 import Material from "./components/Material.vue"
 import {ElMessage} from "element-plus";
 import 'vue-waterfall-plugin-next/dist/style.css'
@@ -79,8 +93,7 @@ const handleCopy = (mediaId: string) => {
   })
 }
 
-
-const {paginationData} = usePagination({pageSize: 15})
+const {paginationData, handleCurrentChange, handleSizeChange} = usePagination({pageSizes: [15, 30, 45], pageSize: 15})
 
 const emit = defineEmits(['update:showDialog'])
 
@@ -94,41 +107,17 @@ const formData = reactive<IGetMaterialParam>({
 })
 
 const loading = ref<boolean>(false)
-const getTableData = (refresh: boolean) => {
+const getTableData = () => {
   loading.value = true
-  if (refresh) {
-    paginationData.currentPage = 1
-  }
   formData.page = paginationData.currentPage
   formData.pageSize = paginationData.pageSize
   getMaterial(formData).then(res => {
     paginationData.total = res.data.total
-    if (refresh) {
-      tableData.value = res.data.list
-    } else {
-      tableData.value.push(...res.data.list)
-    }
+    tableData.value = res.data.list
 
   }).finally(() => {
     loading.value = false
   })
-}
-
-const onScroll = () => {
-  let appMain = document.querySelector('.app-main')
-
-  if (appMain !== null) {
-    const scrollTop = appMain.scrollTop; // 滚动距离
-    const scrollHeight = appMain.scrollHeight; // 元素总高度（含滚动部分）
-    const clientHeight = appMain.clientHeight; // 元素可视高度
-    if (scrollTop + clientHeight + 5 >= scrollHeight) {
-      // 已滚动到最底部
-      if (loading.value === false && Math.ceil(paginationData.total / paginationData.pageSize) > paginationData.currentPage) {
-        paginationData.currentPage++
-        getTableData(false)
-      }
-    }
-  }
 }
 
 onMounted(() => {
@@ -137,9 +126,10 @@ onMounted(() => {
   meta.setAttribute('content', 'no-referrer');
   document.head.appendChild(meta);
 
-  document.querySelector('.app-main')?.addEventListener('scroll', onScroll);
-  getTableData(true)
 })
+
+/** 监听分页参数的变化 */
+watch([() => paginationData.currentPage, () => paginationData.pageSize], getTableData, {immediate: true})
 </script>
 
 <style scoped lang="scss">
