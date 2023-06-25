@@ -37,7 +37,7 @@ const props = defineProps({
 
 const emits = defineEmits(["update:imageUrl", "getImageData"])
 
-const imageUrl = ref('')
+const imageUrl = ref(props.imageUrl)
 
 watch(() => props.imageUrl, (newValue) => {
   imageUrl.value = newValue
@@ -69,7 +69,6 @@ const customRequest = () => {
 <style scoped>
 .avatar-uploader .avatar {
   width: 178px;
-  height: 178px;
   display: block;
 }
 </style>
